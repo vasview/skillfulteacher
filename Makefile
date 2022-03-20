@@ -3,7 +3,7 @@
 VENV = venv
 PYTHON = ${VENV}\Scripts\python
 PIP = ${VENV}\Scripts\pip
-MANAGE = .\elklassproject\manage.py
+MANAGE = .\manage.py
 
 ${VENV}\Scripts\activate: requirements.txt
 	python -m venv venv

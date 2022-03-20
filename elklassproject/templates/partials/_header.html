@@ -1,0 +1,38 @@
+<div id="header">
+    <div class="top_strip">
+      <div class="container">
+        <ul class="top_strip_menu">
+          {% if request.user.is_authenticated %}
+            <li class="top_menu_item">
+              <a href="#">Мой профиль</a>
+              <!-- <%= link_to 'Мой профиль', user_path(current_user) %> -->
+            </li>
+            <li class="top_menu_item">
+              <a href="#">Выход</a>
+              <!-- <%= link_to 'Выход', destroy_user_session_url, method: :delete, class: 'menu__item-link' %> -->
+            </li>
+            {% else %}
+              <li class="top_menu_item">
+                <a href="#">Вход</a>
+                <!-- <%= link_to 'Вход', new_user_session_path, class: 'menu__item-link' %> -->
+              </li>
+            {% endif %}
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <div class="logo_box">
+        <div id="logo">
+          {% load static %}
+          <a href="#">
+            <img src="{% static 'images/logo.png '%}" alt="Logo"> 
+          </a>
+        </div>
+        <div class="search">
+          <div class="search_box">
+            <img src="{% static 'images/search.jpg'%}" alt="search">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

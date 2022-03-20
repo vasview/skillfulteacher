@@ -1,0 +1,122 @@
+
+.banner_wrapper {
+	width: 100%;
+	min-height: 300px;
+	overflow: hidden;
+	margin-bottom: 12px;
+}
+
+.banner {
+	display: inline-block;
+	width: 70%;
+	height: 100%;
+	margin-right: 15px;
+}
+
+.banner img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.ad_box_wrapper {
+	display: inline-block;
+	width: 28%;
+	height: 305px;
+	/* background-image: url(../pictures/deal_of_month.png); */
+	/*background-size: 300px 266px;*/
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.main_block_wrapper {
+	width: 100%;
+	height: 100%;
+	margin-bottom: 12px;
+}
+
+.category {
+	display: inline-block;
+	margin-right: 8px;
+	min-width: 190px;
+	height: 100%;
+	border: 1px solid #dedede;
+	overflow: hidden;
+	vertical-align: top;
+}
+
+.category h2 {
+	padding-left: 17px;
+	padding-top: 10px;
+	font-size: 24px;
+	font-weight: normal;
+	color: #5B5B5B;
+}
+
+.category_list {
+	list-style: none;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.category_item {
+	font-weight: bold;
+	margin-bottom: 7px;
+}
+
+.category_submenu {
+	list-style: none;
+	padding-left: 20px;
+}
+
+.category_submenu_item {
+	margin-bottom: 5px;
+	border-bottom: 1px solid #dedede;
+}
+
+.tab_cover_wrapper {
+	display: inline-block;
+	width: 90%;
+	height: 100%;
+	border: 1px solid #dedede;
+	vertical-align: top;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.tab_itmes {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.tab_item_block {
+	width: 110px;
+	height: 100%;
+	margin-bottom: 25px;
+	overflow: hidden;
+}
+
+.tab_item_cover {
+	width: 107px;
+	height: 160px;
+	padding: 5px;
+	border: 1px solid #dedede;
+	margin-bottom: 5px;
+}
+
+.tab_item_cover img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid #dedede;
+}
+
+.tab_item_title {
+	font-size: 18px;
+	text-transform: capitalize;
+	text-align: center;
+	font-weight: bolder;
+}
