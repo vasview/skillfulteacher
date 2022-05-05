@@ -4,6 +4,8 @@ VENV = venv
 PYTHON = ${VENV}\Scripts\python
 PIP = ${VENV}\Scripts\pip
 MANAGE = .\manage.py
+APP = school
+FIXTURE = ${APP}\fixtures
 
 ${VENV}\Scripts\activate: requirements.txt
 	python -m venv venv
@@ -15,6 +17,29 @@ setup: requirements.txt
 
 run:
 	${PYTHON} ${MANAGE} runserver
+
+create_migrations:
+	${PYTHON} ${MANAGE} makemigrations ${APP}
+
+inspect_migration:
+	${PYTHON} ${MANAGE} sqlmigrate ${APP}
+
+migrate:
+	${PYTHON} ${MANAGE} migrate
+
+rollback_all_migrations:
+	${PYTHON} ${MANAGE} migrate ${APP} zero
+
+flush:
+	${PYTHON} ${MANAGE} flush
+
+load_init_data:
+	${PYTHON} ${MANAGE} loaddata ${FIXTURE}\gender.json
+	${PYTHON} ${MANAGE} loaddata ${FIXTURE}\city.json
+	${PYTHON} ${MANAGE} loaddata ${FIXTURE}\region.json
+	${PYTHON} ${MANAGE} loaddata ${FIXTURE}\subject.json
+	${PYTHON} ${MANAGE} loaddata ${FIXTURE}\job_position.json
+	${PYTHON} ${MANAGE} loaddata ${FIXTURE}\nationality.json
 
 clean:
 	find . -type f -name *.pyc -delete
