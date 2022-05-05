@@ -1,0 +1,16 @@
+[
+    {
+        "model": "school.gender",
+        "pk": 1,
+        "fields": {
+            "name": "мужчина"
+        }
+    },
+    {
+        "model": "school.gender",
+        "pk": 2,
+        "fields": {
+            "name": "женщина"
+        }
+    }
+]

@@ -1,0 +1,121 @@
+[
+    {
+        "model": "school.city",
+        "pk": 1,
+        "fields": {
+            "name": "Бишкек"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 2,
+        "fields": {
+            "name": "Ош"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 3,
+        "fields": {
+            "name": "Балыкчы"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 4,
+        "fields": {
+            "name": "Баткен"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 5,
+        "fields": {
+            "name": "Джалал-Абад"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 6,
+        "fields": {
+            "name": "Кант"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 7,
+        "fields": {
+            "name": "Кара-Балта"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 8,
+        "fields": {
+            "name": "Каракол"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 9,
+        "fields": {
+            "name": "Каракуль"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 10,
+        "fields": {
+            "name": "Кемин"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 11,
+        "fields": {
+            "name": "Кочкор-Ата"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 12,
+        "fields": {
+            "name": "Кызыл-Кия"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 13,
+        "fields": {
+            "name": "Нарын"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 14,
+        "fields": {
+            "name": "Талас"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 15,
+        "fields": {
+            "name": "Ташкумыр"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 16,
+        "fields": {
+            "name": "Токмок"
+        }
+    },
+    {
+        "model": "school.city",
+        "pk": 17,
+        "fields": {
+            "name": "Чолпон-Ата"
+        }
+    }
+]

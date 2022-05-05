@@ -1,0 +1,51 @@
+[
+    {
+        "model": "school.region",
+        "pk": 1,
+        "fields": {
+            "name": "Баткенская область"
+        }
+    },
+    {
+        "model": "school.region",
+        "pk": 2,
+        "fields": {
+            "name": "Джалал-Абадская область"
+        }
+    },
+    {
+        "model": "school.region",
+        "pk": 3,
+        "fields": {
+            "name": "Иссык-Кульская область"
+        }
+    },
+    {
+        "model": "school.region",
+        "pk": 4,
+        "fields": {
+            "name": "Нарынская область"
+        }
+    },
+    {
+        "model": "school.region",
+        "pk": 5,
+        "fields": {
+            "name": "Ошская область"
+        }
+    },
+    {
+        "model": "school.region",
+        "pk": 6,
+        "fields": {
+            "name": "Таласская область"
+        }
+    },
+    {
+        "model": "school.region",
+        "pk": 7,
+        "fields": {
+            "name": "Чуйская область"
+        }
+    }
+]

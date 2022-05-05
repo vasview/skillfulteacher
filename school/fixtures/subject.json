@@ -1,0 +1,107 @@
+[
+    {
+        "model": "school.subject",
+        "pk": 1,
+        "fields": {
+            "name": "Адабият"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 2,
+        "fields": {
+            "name": "Алгебра"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 3,
+        "fields": {
+            "name": "Английский язык"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 4,
+        "fields": {
+            "name": "Биология"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 5,
+        "fields": {
+            "name": "Геометрия"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 6,
+        "fields": {
+            "name": "Информатика"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 7,
+        "fields": {
+            "name": "История"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 8,
+        "fields": {
+            "name": "Кыргыский язык"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 9,
+        "fields": {
+            "name": "Литература"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 10,
+        "fields": {
+            "name": "Русский язык"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 11,
+        "fields": {
+            "name": "Физика"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 12,
+        "fields": {
+            "name": "Физическая культура"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 13,
+        "fields": {
+            "name": "Химия"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 14,
+        "fields": {
+            "name": "Черчение"
+        }
+    },
+    {
+        "model": "school.subject",
+        "pk": 15,
+        "fields": {
+            "name": "Чтение"
+        }
+    }
+]
