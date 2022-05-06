@@ -55,7 +55,7 @@ class Person(models.Model):
 
 class JobPosition(models.Model):
     title = models.CharField(max_length=200)
-    active = models.BooleanField(default=TRUE)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -64,10 +64,9 @@ class Teacher(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     job_positions = models.ManyToManyField(
         JobPosition,
-        through = 'JobPositionChange',
-        through_fields = ('teacher', 'job_position')
+        through = 'JobPositionChange'
     )
-    active = models.BooleanField(default=TRUE)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
          return "%s %s %s" % (self.person.first_name, self.person.middle_name, self.person.last_name)
