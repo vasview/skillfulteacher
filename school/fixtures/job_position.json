@@ -3,28 +3,28 @@
         "model": "school.JobPosition",
         "pk": 1,
         "fields": {
-            "name": "Учитель начальных классов"
+            "title": "Учитель начальных классов"
         }
     },
     {
         "model": "school.JobPosition",
         "pk": 2,
         "fields": {
-            "name": "Учитель старшей школы"
+            "title": "Учитель старшей школы"
         }
     },
     {
         "model": "school.JobPosition",
         "pk": 3,
         "fields": {
-            "name": "Учитель предментик"
+            "title": "Учитель предментик"
         }
     },
     {
         "model": "school.JobPosition",
         "pk": 4,
         "fields": {
-            "name": "Завуч"
+            "title": "Завуч"
         }
     }
 ]
