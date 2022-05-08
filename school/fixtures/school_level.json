@@ -1,0 +1,23 @@
+[
+    {
+        "model": "school.schoollevel",
+        "pk": 1,
+        "fields": {
+            "name": "Начальная школа"
+        }
+    },
+    {
+        "model": "school.schoollevel",
+        "pk": 2,
+        "fields": {
+            "name": "Средняя школа"
+        }
+    },
+    {
+        "model": "school.schoollevel",
+        "pk": 3,
+        "fields": {
+            "name": "Старшая школа"
+        }
+    }
+]

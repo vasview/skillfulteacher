@@ -1,0 +1,29 @@
+[
+    {
+        "model": "school.schoolyear",
+        "pk": 1,
+        "fields": {
+            "period": "2021-2022",
+            "autumn_semester": 2021,
+            "spring_semester": 2022
+        }
+    },
+    {
+        "model": "school.schoolyear",
+        "pk": 2,
+        "fields": {
+            "period": "2022-2023",
+            "autumn_semester": 2022,
+            "spring_semester": 2023
+        }
+    },
+    {
+        "model": "school.schoolyear",
+        "pk": 3,
+        "fields": {
+            "period": "2023-2024",
+            "autumn_semester": 2023,
+            "spring_semester": 2024
+        }
+    }
+]
