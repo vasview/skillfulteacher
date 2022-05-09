@@ -1,27 +1,27 @@
 [
     {
-        "model": "school.JobPosition",
+        "model": "staff.JobPosition",
         "pk": 1,
         "fields": {
             "title": "Учитель начальных классов"
         }
     },
     {
-        "model": "school.JobPosition",
+        "model": "staff.JobPosition",
         "pk": 2,
         "fields": {
             "title": "Учитель старшей школы"
         }
     },
     {
-        "model": "school.JobPosition",
+        "model": "staff.JobPosition",
         "pk": 3,
         "fields": {
             "title": "Учитель предментик"
         }
     },
     {
-        "model": "school.JobPosition",
+        "model": "staff.JobPosition",
         "pk": 4,
         "fields": {
             "title": "Завуч"

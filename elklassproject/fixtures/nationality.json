@@ -1,69 +1,69 @@
 [
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 1,
         "fields": {
             "name": "казах"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 2,
         "fields": {
             "name": "кыргыз"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 3,
         "fields": {
             "name": "дунганин"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 4,
         "fields": {
             "name": "кореец"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 5,
         "fields": {
             "name": "русский"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 6,
         "fields": { 
             "name": "таджик"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 7,
         "fields": { 
             "name": "татарин"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 8,
         "fields": {
             "name": "узбек"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 9,
         "fields": {
             "name": "уйгур"
         }
     },
     {
-        "model": "school.nationality",
+        "model": "people.nationality",
         "pk": 10,
         "fields": {
             "name": "украинец"

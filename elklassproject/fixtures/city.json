@@ -1,118 +1,118 @@
 [
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 1,
         "fields": {
             "name": "Бишкек"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 2,
         "fields": {
             "name": "Ош"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 3,
         "fields": {
             "name": "Балыкчы"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 4,
         "fields": {
             "name": "Баткен"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 5,
         "fields": {
             "name": "Джалал-Абад"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 6,
         "fields": {
             "name": "Кант"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 7,
         "fields": {
             "name": "Кара-Балта"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 8,
         "fields": {
             "name": "Каракол"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 9,
         "fields": {
             "name": "Каракуль"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 10,
         "fields": {
             "name": "Кемин"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 11,
         "fields": {
             "name": "Кочкор-Ата"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 12,
         "fields": {
             "name": "Кызыл-Кия"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 13,
         "fields": {
             "name": "Нарын"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 14,
         "fields": {
             "name": "Талас"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 15,
         "fields": {
             "name": "Ташкумыр"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 16,
         "fields": {
             "name": "Токмок"
         }
     },
     {
-        "model": "school.city",
+        "model": "people.city",
         "pk": 17,
         "fields": {
             "name": "Чолпон-Ата"
