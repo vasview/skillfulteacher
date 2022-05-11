@@ -18,10 +18,14 @@ class ParrentType(models.TextChoices):
     CUSTODIAN = 'CSD', 'Опекун'
 
 class Student(models.Model):
-    person = models.OneToOneField('people.Person', on_delete=models.CASCADE, primary_key=True)
+    person = models.OneToOneField('people.Person', on_delete=models.PROTECT)
     klasses = models.ManyToManyField(
         'school.Klass',
         through = 'StudentKlass'
+    )
+    groups = models.ManyToManyField(
+        'student.Group',
+        through = 'student.GroupMember'
     )
     characteristics = models.TextField(blank=True, null=True)
     active = models.BooleanField(default=True)
@@ -35,8 +39,8 @@ class Student(models.Model):
         return "%s %s %s" % (self.person.last_name, self.person.first_name, self.person.middle_name)
 
 class Parrent(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    person = models.OneToOneField('people.Person', on_delete=models.CASCADE, primary_key=True)
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+    person = models.OneToOneField('people.Person', on_delete=models.PROTECT)
     relation_type = models.CharField(
         max_length=3,
         choices=ParrentType.choices,
@@ -53,13 +57,13 @@ class Parrent(models.Model):
 
 class StudentKlass(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    klass = models.ForeignKey('school.Klass', on_delete=models.CASCADE)
+    klass = models.ForeignKey('school.Klass', on_delete=models.PROTECT)
     date_from = models.DateField(auto_now_add=True)
-    date_to = models.DateField()
+    date_to = models.DateField(blank=True, null=True)
 
     class Meta:
-        verbose_name = 'Класс учеников'
-        verbose_name_plural = 'Список классов учеников'
+        verbose_name = 'Состав классов учеников'
+        verbose_name_plural = 'Составы классов учеников'
         ordering = ['klass__code', 'student__person__full_name']
 
     def __str__(self):
@@ -82,22 +86,29 @@ class StudentDocument(models.Model):
 
 class Group(models.Model):
     name = models.CharField(max_length=255)
-    klass = models.ForeignKey('school.Klass', on_delete=models.CASCADE)
+    klass = models.ForeignKey('school.Klass', on_delete=models.PROTECT)
     teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True)
     subject = models.ForeignKey('school.Subject', on_delete=models.SET_NULL, blank=True, null=True)
     lessons = models.ManyToManyField('school.Lesson', through='GroupLesson')
 
     class Meta:
-        verbose_name = 'Группа учеников'
+        verbose_name = 'Группы учеников'
         verbose_name_plural = 'Список групп учеников'
         ordering = ['name']
 
     def __str__(self):
         return self.name
 
-class StudentGroup(models.Model):
+class GroupMember(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Состав группы учеников'
+        verbose_name_plural = 'Состав групп учеников'
+
+    def __str__(self):
+        return self.group.name
 
 class GroupLesson(models.Model):
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
@@ -105,9 +116,9 @@ class GroupLesson(models.Model):
 
 class GradeBook(models.Model):
     date = models.DateField(auto_now_add=True)
-    subject = models.ForeignKey('school.Subject', on_delete=models.CASCADE)
+    subject = models.ForeignKey('school.Subject', on_delete=models.PROTECT)
     schoolyear = models.ForeignKey('school.SchoolYear', on_delete=models.SET_NULL, blank=True, null=True)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
     grade = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     first_trimester = models.DecimalField(max_digits = 3, decimal_places = 2, blank=True, null=True)
     second_trimester = models.DecimalField(max_digits = 3, decimal_places = 2, blank=True, null=True)

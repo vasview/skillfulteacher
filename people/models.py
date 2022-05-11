@@ -61,7 +61,7 @@ class Person(models.Model):
     first_name = models.CharField(max_length=100)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100)
-    full_name = models.CharField(max_length=350, blank=True, editable=False)
+    full_name = models.CharField(max_length=350, blank=True)
     birth_date = models.DateField(blank=True, null=True)
     registration_address = models.CharField(max_length=200, blank=True, null=True)
     actual_address = models.CharField(max_length=200, blank=True, null=True)
@@ -71,7 +71,10 @@ class Person(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self):
-        self.full_name = self.last_name + ' ' + self.first_name + ' ' + self.middle_name
+        if not self.middle_name:
+            self.full_name = self.last_name + ' ' + self.first_name
+        else:
+            self.full_name = self.last_name + ' ' + self.first_name + ' ' + self.middle_name
         super(Person, self).save()
 
     class Meta:
