@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block page_content %}
+<h3>Авторизация</h3>
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+
+    <div class="form-error">{{form.non_field_errors }}</div>
+
+    {% for f in form %}
+    <p><label class="form-label" for='{{ f.id_for_label }}'>{{ f.label }}</label>{{ f }}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <button type="submit">Отправить</button> 
+
+</form>
+
+{% endblock %}

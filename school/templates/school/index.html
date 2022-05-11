@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block page_content %}
+{% load school_tags %}
 {% load static %}
 <div class="tab_cover_wrapper">
     <div class="tab_itmes">
@@ -29,4 +30,13 @@
       </div>
     </div>
   </div>
+  <!-- <div>
+    {% get_teachers as teacher %}
+    {% for t in teacher %}
+    <p> {{ t.last_name}}</p>
+    {% endfor %}
+  </div>
+  <div>
+    {% get_subjects filter=1 %}
+  </div> -->
   {% endblock %}
