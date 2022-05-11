@@ -11,7 +11,8 @@ from turtle import back
 from typing import ChainMap
 from django.db import models
 from django.forms import CharField
-from django.core.validators import MaxValueValidator, MinValueValidator 
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.urls import reverse 
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -31,11 +32,11 @@ class JobPosition(models.Model):
         return self.title
 
 class Teacher(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.PROTECT)
     first_name = models.CharField(max_length=100)
     middle_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100)
-    full_name = models.CharField(max_length=350, blank=True, editable=False)
+    full_name = models.CharField(max_length=350, blank=True)
     birth_date = models.DateField(blank=True, null=True)
     gender = models.CharField(
         max_length=2,
@@ -74,6 +75,9 @@ class Teacher(models.Model):
 
     def __str__(self):
         return "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
+
+    def get_absolute_url(self):
+        return reverse('teacher', kwargs={'teacher_id': self.pk})
 
 class TeacherDocument(models.Model):
     name = models.CharField(max_length=100)
