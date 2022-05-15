@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h2>Мой профиль</h2>
+{% if teacher.avatar %}
+<p><img src='{{teacher.avatar.url}}' alt="avatar" width="100" height="100"></p>
+{% endif %}
+<p>Фамилия: {{ teacher.last_name }}</p>
+<p>Имя: {{ teacher.first_name }}</p>
+<p>Отчество: {{ teacher.middle_name }}</p>
+<p>Пол: {{ teacher.gender }}</p>
+<p>Дата рождения: {{ teacher.birth_date }}</p>
+<p>Телефон: {{ teacher.phone }}</p>
+{% endblock %}
