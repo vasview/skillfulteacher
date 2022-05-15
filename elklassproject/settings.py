@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'phonenumber_field',
+    'crispy_forms',
     'school.apps.SchoolConfig',
     'staff.apps.StaffConfig',
     'student.apps.StudentConfig',
@@ -75,6 +76,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'elklassproject.wsgi.application'
 
+CRISPY_TEMPLATE_PACK = 'django_bootstrap5'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
