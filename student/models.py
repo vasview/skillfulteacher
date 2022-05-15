@@ -1,6 +1,7 @@
 from contextlib import nullcontext
 from distutils.command.upload import upload
 from email.policy import default
+import imp
 from pickle import TRUE
 from statistics import mode
 from tabnanny import verbose
@@ -10,6 +11,7 @@ from typing import ChainMap, OrderedDict
 from django.db import models
 from django.forms import CharField
 from django.core.validators import MaxValueValidator, MinValueValidator 
+from django.urls import reverse
 
 class ParrentType(models.TextChoices):
     NONE = 'NA', 'Не выбрано'
@@ -31,12 +33,15 @@ class Student(models.Model):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = 'Ученик'
+        verbose_name = 'Ученики'
         verbose_name_plural = 'Список Учеников'
         ordering = ['person__full_name']
 
     def __str__(self):
         return "%s %s %s" % (self.person.last_name, self.person.first_name, self.person.middle_name)
+
+    def get_absolute_url(self):
+        return reverse('show_student', kwargs={'student_id': self.pk})
 
 class Parrent(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
@@ -48,7 +53,7 @@ class Parrent(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Родитель'
+        verbose_name = 'Родители'
         verbose_name_plural = 'Список Родителей'
         ordering = ['person__full_name']
 
@@ -77,7 +82,7 @@ class StudentDocument(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'Документ ученика'
+        verbose_name = 'Документы ученика'
         verbose_name_plural = 'Список документов ученика'
         ordering = ['name']
 
@@ -85,8 +90,8 @@ class StudentDocument(models.Model):
         return self.name
 
 class Group(models.Model):
-    name = models.CharField(max_length=255)
-    klass = models.ForeignKey('school.Klass', on_delete=models.PROTECT)
+    name = models.CharField(max_length=255, default='Unallocated')
+    klass = models.ForeignKey('school.Klass', on_delete=models.PROTECT, blank=True, null=True)
     teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True)
     subject = models.ForeignKey('school.Subject', on_delete=models.SET_NULL, blank=True, null=True)
     lessons = models.ManyToManyField('school.Lesson', through='GroupLesson')
@@ -145,7 +150,7 @@ class LessonAttendance(models.Model):
     reason = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
-        verbose_name = 'Табель посещения учеников'
+        verbose_name = 'Табель посещамости учеников'
         verbose_name_plural = 'Табеля посещамости учеников'
         ordering = ['student__person__last_name', 'lesson__subject__name', 'date']
 

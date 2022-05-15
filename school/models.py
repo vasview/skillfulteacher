@@ -59,7 +59,7 @@ class Klass(models.Model):
 
     class Meta:
         verbose_name = 'Класс'
-        verbose_name_plural = 'Классы'
+        verbose_name_plural = 'Список классов'
         ordering = ['code']
 
     def save(self):

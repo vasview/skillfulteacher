@@ -24,7 +24,7 @@ class JobPosition(models.Model):
     active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name = 'Должность'
+        verbose_name = 'Должности'
         verbose_name_plural = 'Справочник должностей'
         ordering = ['title']
 
@@ -69,7 +69,7 @@ class Teacher(models.Model):
         super(Teacher, self).save()
 
     class Meta:
-        verbose_name = 'Учитель'
+        verbose_name = 'Учителя'
         verbose_name_plural = 'Педагогический состав'
         ordering = ['last_name', 'first_name']
 
@@ -77,7 +77,8 @@ class Teacher(models.Model):
         return "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
 
     def get_absolute_url(self):
-        return reverse('teacher', kwargs={'teacher_id': self.pk})
+        # return reverse('staff/teachers/', kwargs={'teacher_id': self.pk})
+         return reverse('show_teacher', kwargs={'teacher_id': self.pk})
 
 class TeacherDocument(models.Model):
     name = models.CharField(max_length=100)
@@ -88,8 +89,8 @@ class TeacherDocument(models.Model):
 
     class Meta:
         ordering = ['name']
-        verbose_name = 'Документ педагога'
-        verbose_name_plural = 'Список документов педагоков'
+        verbose_name = 'Документы учителя'
+        verbose_name_plural = 'Список документов учителей'
 
     def __str__(self):
         return self.name
