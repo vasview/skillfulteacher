@@ -7,14 +7,15 @@
   
   html {
       width: 100%;
-      height: 100%;
+      /* height: 100%; */
+      min-height: 100%;
   }
   
   body {
       margin: 0 auto;
       max-width: 100%;
       height: 100%;
-      height: auto; 
+      /* min-height: 100%;  */
       background-color: #FFF;
   }
   
@@ -22,6 +23,7 @@
       margin: 0 auto;
       max-width: 1024px;
       height: 100%; 
+      /* position: relative; */
   }
   
   #header {
@@ -41,20 +43,14 @@
   
   #main {
       width: 100%;
-      /*height: auto;*/
-      height: 100%;
+      height: auto;
+      margin-bottom: 50px;
+      /* height: 100%; */
+      /* min-height: calc(72vh - 50px); */
       overflow: hidden;
       background: #FFF;
   }
-  
-  #footer {
-      width: 100%;
-      height: auto;
-      /*height: 300px;*/
-      background-color: #424242;
-  
-  }
-  
+
   .top_strip {
       margin: 0 auto;
       width: 100%;
@@ -303,6 +299,17 @@
       background: #8BCE6E;
       color: #FFF;
   }
+
+  
+  #footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* height: 600px; */
+    height: 50px;
+    background-color: #424242;
+    overflow: hidden;
+}
   
   .footer_menu {
       width: 100%;
@@ -330,133 +337,7 @@
     margin: 0 auto;
     clear: all;
   }
-  
-  html {
-      width: 100%;
-      height: 100%;
-  }
-  
-  body {
-      margin: 0 auto;
-      max-width: 100%;
-      height: 100%;
-      height: auto; 
-      background-color: #FFF;
-  }
-  
-  
-  .container {
-      margin: 0 auto;
-      max-width: 1024px;
-      height: 100%; 
-  }
-  
-  #header {
-      width: 100%;
-      height: auto;
-      background-color: #F8F8F8;
-      border-bottom: 1px solid #dedede;
-  }
-  
-  #nav_bar {
-      width: 100%;
-      height: auto;
-      background-color: #FFF;
-      border-bottom: 1px solid #dedede;
-      margin-bottom: 12px;
-  }
-  
-  #main {
-      width: 100%;
-      /*height: auto;*/
-      height: 100%;
-      overflow: hidden;
-      background: #FFF;
-  }
-  
-  #footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      /*height: 600px;*/
-      height: auto;
-      background-color: #424242;
-      overflow: hidden;
-  }
-  
-  .top_strip {
-      margin: 0 auto;
-      width: 100%;
-      height: 28px;
-      background-color: #424242;
-  }
-  
-  .top_strip_menu {
-      margin: 0 auto;
-      width: 50%;
-      height: 28px;
-      float: right;
-      list-style: none;
-  }
-  
-  .top_menu_item {
-      display: inline-block;
-      width: auto;
-      text-align: center;
-      vertical-align: middle;
-      padding-right: 50px;
-      padding-top: 2px;
-      float: right;
-  }
-  
-  .top_menu_item a {
-      text-decoration: none;
-      color: #F2F2F2;	
-      text-transform: capitalize;
-  }
-  
-  /*.top_menu_item a:hover {
-      text-decoration: none;
-  }
-  .logo_box {
-      height: 110px;
-      width: 100%;
-  }
-  #logo {
-      display: inline-block;
-      width: 15%;
-      height: 100%;
-  }
-  #logo > a img {
-      display: block;
-      width: 127px;
-      height: auto;
-      padding-top: 20px;
-      /*padding-bottom: 17px;
-  }
-  */
-  
-  .search {
-      display: inline-block;
-      width: 45%;
-      height: 100%;
-  }
-  
-  .search_box {
-      display: block;
-      height: 100%;
-      width: auto;
-      position: relative;
-  }
-  
-  .search_box > img {
-      margin: auto;
-      width: 90%;
-      height: auto;
-      object-fit: contain;
-      position: absolute;
-      top: 30%;
-  }
+
   
   .cart {
       display: inline-block;
