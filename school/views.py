@@ -1,11 +1,12 @@
 from lib2to3.pgen2.pgen import DFAState
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-
+from django.views.generic import View, ListView, DetailView, CreateView
 from school.forms import *
 
-def home(request):
-    return render(request, 'school/index.html')
+class SchoolHome(View):
+    def get(self,request,*args, **kwargs):
+        return render(request, 'school/index.html')
 
 def login(request):
     if request.method == 'POST':
