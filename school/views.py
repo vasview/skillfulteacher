@@ -1,5 +1,6 @@
 from lib2to3.pgen2.pgen import DFAState
 from multiprocessing.spawn import import_main_path
+from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
@@ -12,27 +13,32 @@ class SchoolHome(View):
     def get(self,request,*args, **kwargs):
         return render(request, 'school/index.html')
 
-def login_user(request):
+def user_login(request):
+    next_page = ''
+    if request.GET:
+        next_page = request.GET['next']
+
     if request.POST:
         form = LoginForm(request.POST)
         if form.is_valid():
-            # print(form.cleaned_data)
             username = form.cleaned_data['user']
             password = form.cleaned_data['password']
             
             user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
+            if user is not None and user.is_active:
+                login(request, user)
+                if next_page == "":
                     return redirect('home')
+                else:
+                    return redirect(next_page)
             else:
                 form.add_error(None, 'Ошибка входа')
     else:
         form = LoginForm()
     
-    return render(request, 'school/login.html', {'form': form})
+    return render(request, 'school/login.html', {'form': form, 'next': next_page})
 
-def logout_user(request):
+def user_logout(request):
     logout(request)
     return redirect(reverse_lazy('home'))
 

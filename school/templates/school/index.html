@@ -17,10 +17,12 @@
         <div class="tab_item_title">Табеля</div>
       </div>
       <div class="tab_item_block">
-        <div class="tab_item_cover">
-            <img src="{% static 'images/students.png' %}">
-        </div>
-        <div class="tab_item_title">Ученики</div>
+        <a href="{% url 'students' %}"> 
+          <div class="tab_item_cover">
+              <img src="{% static 'images/students.png' %}">
+          </div>
+          <div class="tab_item_title">Ученики</div>
+        </a>
       </div>
       <div class="tab_item_block">
         <div class="tab_item_cover">

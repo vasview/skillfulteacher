@@ -58,6 +58,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'elklassproject.urls'
 LOGOUT_REDIRECT_URL = 'home' 
+LOGIN_URL = '/login/'
 
 TEMPLATES = [
     {

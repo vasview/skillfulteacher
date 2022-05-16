@@ -3,11 +3,17 @@
 <link href="{ % static 'signin.css' % }" rel="stylesheet" type="text/css">
 {% block page_content %}
 <div class="text-center">
-<form action="{% url 'login' %}" method="post" class="form-signin w-50">
+  {% if next %}
+    <form action="/login/?next={{next}}" method="post" >
+  {%else%}
+  <form action="{% url 'login' %}" method="post" class="form-signin w-50">
+  {% endif %}
     {% csrf_token %}
     <img class="mb-4" src="{% static 'images/logo.png '%}" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Введите данные для входа</h1>
-
+    {% if next %}
+      <input type="hidden" name="next" value="{{ next }}" />
+    {% endif %}
     <div class="form-error">{{ form.non_field_errors }}</div>
 
     {% for f in form %}

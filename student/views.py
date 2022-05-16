@@ -9,7 +9,10 @@ from django.forms.models import inlineformset_factory
 
 
 def students(request):
-    return render(request, 'student/index.html')
+    if request.user.is_authenticated:
+        return render(request, 'student/index.html')
+    else:
+        return redirect('login')
 
 def show_student(request, student_id):
     if request.method == 'POST':
