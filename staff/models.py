@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from people.models import Gender
+from student.models import Student
 
 class JobPosition(models.Model):
     title = models.CharField(max_length=200)
@@ -101,3 +102,6 @@ class JobPositionChange(models.Model):
     date_from = models.DateField(auto_now_add=True)
     date_to = models.DateField()
 
+class TeacherStudent(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
