@@ -43,6 +43,12 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('show_student', kwargs={'student_id': self.pk})
 
+class StudentPortfolio(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+    characteristics = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 class Parrent(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
     person = models.OneToOneField('people.Person', on_delete=models.PROTECT)
