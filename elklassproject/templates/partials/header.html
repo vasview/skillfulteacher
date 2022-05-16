@@ -3,11 +3,13 @@
     <div class="container">
       <ul class="top_strip_menu">
         {% if request.user.is_authenticated %}
+        {% if request.user.teacher %}
           <li class="top_menu_item">
-            <a href="{% url 'show_teacher' teacher_id=request.user.id %}">Мой профиль</a>
+            <a href="{% url 'show_teacher' id=request.user.teacher.id %}">Мой профиль</a>
           </li>
+        {% endif %}
           <li class="top_menu_item">
-            <a href="#">Выход</a>
+            <a href="{% url 'logout' %}">Выход</a>
             <!-- <%= link_to 'Выход', destroy_user_session_url, method: :delete, class: 'menu__item-link' %> -->
           </li>
           {% else %}

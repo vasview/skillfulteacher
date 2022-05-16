@@ -12,7 +12,7 @@ class StaffTeachers(ListView):
 class ShowTeacher(DetailView):
     model = Teacher
     template_name = 'staff/teacher_profile.html'
-    pk_url_kwarg = 'teacher_id'
+    pk_url_kwarg = 'id'
     context_object_name = 'teacher'
 
     def get_context_data(self, **kwargs):

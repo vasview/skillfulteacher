@@ -12,7 +12,7 @@ from typing import ChainMap
 from django.db import models
 from django.forms import CharField
 from django.core.validators import MaxValueValidator, MinValueValidator
-from django.urls import reverse 
+from django.urls import reverse
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -78,8 +78,7 @@ class Teacher(models.Model):
         return "%s %s %s" % (self.first_name, self.middle_name, self.last_name)
 
     def get_absolute_url(self):
-        # return reverse('staff/teachers/', kwargs={'teacher_id': self.pk})
-         return reverse('show_teacher', kwargs={'teacher_id': self.pk})
+        return reverse('show_teacher', kwargs={'id': self.pk})
 
 class TeacherDocument(models.Model):
     name = models.CharField(max_length=100)
