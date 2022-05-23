@@ -1,5 +1,6 @@
 from contextlib import nullcontext
 from distutils.command.upload import upload
+import email
 from email.policy import default
 from pickle import TRUE
 from statistics import mode
@@ -72,6 +73,7 @@ class Klass(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=300, blank=True, null=True)
     teachers = models.ManyToManyField(
         'staff.Teacher',
         through = 'TeacherSubject',
@@ -79,7 +81,7 @@ class Subject(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Предмет'
+        verbose_name = 'Предметы'
         verbose_name_plural = 'Справочник предметов'
         ordering = ['name']
 

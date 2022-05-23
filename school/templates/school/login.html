@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
-<link href="{ % static 'signin.css' % }" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="{ % static 'css/signin.css' % }"  type="text/css">
 {% block page_content %}
 <div class="text-center">
   {% if next %}
-    <form action="/login/?next={{next}}" method="post" >
+    <form action="/login/?next={{next}}" method="post" class="form-signin w-50">
   {%else%}
   <form action="{% url 'login' %}" method="post" class="form-signin w-50">
   {% endif %}
@@ -16,9 +16,18 @@
     {% endif %}
     <div class="form-error">{{ form.non_field_errors }}</div>
 
+    <!-- <div class="form-floating">
+      <input type="text" class="form-control" id="user" placeholder="Пользователь">
+      <label for="user">Пользователь</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="password" placeholder="Пароль">
+      <label for="password">Пароль</label>
+    </div> -->
+
     {% for f in form %}
     <div class="form-floating">
-        <label class="form-label" for='{{ f.id_for_label }}'>{{ f.label }}</label>{{ f }}
+        {{ f }}<label class="form-label" for='{{ f.id_for_label }}'>{{ f.label }}</label>
         <div class="form-error">{{ f.errors }}</div>
     </div>
     {% endfor %}
