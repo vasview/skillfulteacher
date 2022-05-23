@@ -3,6 +3,7 @@
     box-sizing: border-box;
     margin: 0 auto;
     clear: all;
+    font-family: 'Josefin Sans', sans-serif !important;  
   }
   
   html {
@@ -42,7 +43,7 @@
   }
   
   #main {
-      width: 100%;
+      width: 90%;
       height: auto;
       margin-bottom: 50px;
       /* height: 100%; */
@@ -94,6 +95,7 @@
       display: inline-block;
       width: 15%;
       height: 100%;
+      vertical-align: middle;
   }
   
   #logo > a img {
@@ -101,88 +103,6 @@
       width: 130px;
       height: auto;
       max-height: 100%;
-  }
-  
-  .search {
-      display: inline-block;
-      margin-left: 50px;
-      width: 60%;
-      height: 100%;
-  }
-  
-  .search_box {
-      display: block;
-      height: 100%;
-      width: auto;
-      position: relative;
-  }
-  
-  .search_box > img {
-      margin: auto;
-      width: 90%;
-      height: auto;
-      object-fit: contain;
-      position: absolute;
-      top: 30%;
-  }
-  
-  .cart {
-      display: inline-block;
-      width: 22%;
-      height: 100%;
-  }
-  
-  .cart_box {
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: relative;
-  }
-  
-  .cart_top {
-      display: block;
-      width: 100%;
-      height: 50%;
-      position: absolute;
-      padding-top: 10px;
-  }
-  
-  .cart_top > img {
-      width: 40px;
-      height: auto;
-      padding-right: 5px;
-  }
-  
-  .cart_inside {
-      display: inline-block;
-      width: 70%;
-      height: 100%;
-      text-align: left;
-      vertical-align: middle;
-  }
-  
-  .cart_name {
-      font-size: 23px;
-  }
-  
-  .cart_items {
-      font-size: 14px;
-  }
-  
-  .cart_bottom {
-      display: block;
-      width: 100%;
-      height: 50%;
-      position: absolute;
-      top: 50%;
-      text-align: left;
-  }
-  .cart_total {
-      height: 100%;
-      width: 55%;
-      display: inline-block;
-      font-size: 27px;
-      font-weight: bold;
   }
   
   .action_button {
