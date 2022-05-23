@@ -1,47 +1,79 @@
+import tempfile
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView, DeleteView, CreateView, View
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, View, UpdateView
 from student.forms import *
 from student.models import *
 from people.models import *
 from django.forms.models import inlineformset_factory
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+
+class ListStudents(LoginRequiredMixin, ListView):
+    model = Person
+    context_object_name = 'students'
+    template_name = 'student/index.html'
+    login_url = '/login/'
+
+    def get_queryset(self):
+        queryset = Person.objects.filter(contact_type='STD')
+        return queryset
+
+class ShowStudent(DetailView):
+    model = Student
+    context_object_name = 'student'
+    pk_url_kwarg = 'id'
+    template_name = 'student/show_student.html'
+
+@login_required()
+def search_students(request):
+    # search_vector = SearchVector('first_name', 'last_name')
+    # if ('query' in request.GET) and request.GET['query'].strip():
+    #     query_string=request.GET['query']
+    #     students = Person.objects.annotate(
+    #             search=search_vector).filter(search=query_string)
+
+   
+    if ('query' in request.GET) and request.GET['query'].strip():
+        query_string=request.GET['query']
+        students = Person.objects.filter(
+                Q(first_name__icontains=query_string) | Q(last_name__icontains=query_string)
+        )
+        print(students)
+    return render(request, 'student/index.html', { 'students': students})
 
 
-def students(request):
-    if request.user.is_authenticated:
-        return render(request, 'student/index.html')
-    else:
-        return redirect('login')
+# def show_student(request, id):
+#     if request.GET:
+#         student = Student.objects.get(pk=id)
+#         form = AddPersonForm(Person.objects.filter(pk=student.person_id))
 
-def show_student(request, student_id):
-    if request.method == 'POST':
-        form = AddStudentForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            try:
-                form.save()
-                # Student.objects.get(pk=student_id)
-                # return redirect('home')
-            except:
-                form.add_error(None, 'Ошибка добавления студента')
-    else:
-        form = AddStudentForm()
+    # if request.method == 'POST':
+    #     form = AddStudentForm(request.POST)
+    #     if form.is_valid():
+    #         print(form.cleaned_data)
+    #         try:
+    #             form.save()
+    #             # Student.objects.get(pk=student_id)
+    #             # return redirect('home')
+    #         except:
+    #             form.add_error(None, 'Ошибка добавления студента')
+    # else:
+    #     form = AddStudentForm()
     
-    return render(request, 'student/show_student.html', {'form': form})
+    # return render(request, 'student/show_student.html', {'form': form})
 
 StudentFormset = inlineformset_factory(
     Person, Student, fields=('active','characteristics')
 )
 
-class AddStudent(View):
-    # model = Person
-    # fields = ['first_name','last_name', 'middle_name',]
-    # labels = {
-    #     'first_name' : 'Имя', 'last_name': 'Фамилия'
-    # }
+class AddStudent(LoginRequiredMixin, View):
     form_class = AddStudentForm
     template_name = 'student/add_student.html'
+    login_url = '/login/'
 
     def get(self, request, *args, **kwargs):
         form = self.form_class
@@ -55,51 +87,29 @@ class AddStudent(View):
         else:
             return render(request, self.template_name, {'form': form})
 
-    # def get_context_data(self, **kwargs):
-    #     # we need to overwrite get_context_data
-    #     # to make sure that our formset is rendered
-    #     data = super().get_context_data(**kwargs)
-    #     if self.request.POST:
-    #         # data = AddStudentForm(self.request.POST)
-    #         data["student"] = AddStudentForm(self.request.POST)
-    #     else:
-    #         # data = AddStudentForm()
-    #         data["student"] = AddStudentForm()
-    #     return data
+class EditStudent(LoginRequiredMixin, UpdateView):
+    form_class = UpdatePersonForm
+    template_name = 'student/add_student.html'
+    login_url = '/login/'
 
-    # def form_valid(self, form):
-    #     context = self.get_context_data()
+    def get_context_data(self, **kwargs):
+        student = Student.objects.get(id=kwargs['id'])
+        return student
+
+    def get(self,  request, *args, **kwargs):
+        student = get_context_data(self, **kwargs)
+        person = Student.objects.get(pk=student.id).person
+
+    # def get(self, request, *args, **kwargs):
+    #     # student = Student.objects.get(pk=request.GET['id'])
+    #     student = Student.objects.get(pk=2)
+    #     form = self.form_class(instance=student)
+    #     return render(request, self.template_name, {'form': form})
+
+    # def post(self, request, *args, **kwargs):
+    #     form = self.form_class(request.POST,  request.FILES)
     #     if form.is_valid():
-    #         self.object = form.save()
-    #     student = context["student"]
-    #     self.object = form.save()
-    #     if student.is_valid():
-    #         student.instance = self.object
-    #         student.save()
-    #     return super().form_valid(form)
-
-    # def get_success_url(self):
-    #     return reverse("home")
-
-    # def get_initial(self):
-    #     if Person.objects.filter(owner=self.request.user).exists():
-    #         user = self.request.user
-    #         initial = super(AddProductView, self).get_initial()
-    #         initial['store'] = Store.objects.get(owner=user)
-    #         return initial 
-
-# def add_student(request):
-#     if request.method == 'POST':
-#         form = AddStudentForm(request.POST)
-#         if form.is_valid():
-#             print(form.cleaned_data)
-#             try:
-#                 form.save()
-#                 # Student.objects.get(pk=student_id)
-#                 return redirect('home')
-#             except:
-#                 form.add_error(None, 'Ошибка добавления студента')
-#     else:
-#         form = AddStudentForm()
-    
-#     return render(request, 'student/add_student.html', {'form': form})
+    #         form.save()
+    #         return redirect("home")
+    #     else:
+    #         return render(request, self.template_name, {'form': form})

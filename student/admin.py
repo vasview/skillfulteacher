@@ -44,7 +44,7 @@ class StudentKlassAdmin(admin.ModelAdmin):
         return obj.student.person.last_name
 
 admin.site.register(Student, StudentAdmin)
-admin.site.register(Parrent)
+admin.site.register(Parent)
 admin.site.register(StudentKlass, StudentKlassAdmin)
 admin.site.register(StudentDocument)
 admin.site.register(Group)

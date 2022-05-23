@@ -41,7 +41,7 @@ class Student(models.Model):
         return "%s %s %s" % (self.person.last_name, self.person.first_name, self.person.middle_name)
 
     def get_absolute_url(self):
-        return reverse('show_student', kwargs={'student_id': self.pk})
+        return reverse('show_student', kwargs={'id': self.pk})
 
 class StudentPortfolio(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT)
@@ -49,9 +49,9 @@ class StudentPortfolio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Parrent(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.PROTECT)
+class Parent(models.Model):
     person = models.OneToOneField('people.Person', on_delete=models.PROTECT)
+    student = models.ManyToManyField(Student, related_name='parents')
     relation_type = models.CharField(
         max_length=3,
         choices=ParrentType.choices,

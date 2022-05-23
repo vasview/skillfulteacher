@@ -1,1 +1,44 @@
-<h1>All students</h1>
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h2>Список учеников</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">ФИО ученика</th>
+            <th scope="col">Дата Рождения</th>
+            <th scope="col">Активный</th>
+            <th scope="col">Пол</th>
+            <th scope="col">Класс</th>
+            <th scope="col">Просмотр</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for std in students %}
+        <tr>
+            <td scope="row"><input type="checkbox" /></td>
+            <td>
+                {{ std.full_name }}
+            </td>
+            <td>
+                {{ std.birth_date }}
+            </td>
+            <td>
+                {{ std.student.active }}
+            </td>
+            <td>
+                {{ std.get_gender_display }}
+            </td>
+            <td>
+                {{ std.klasses.last.code }}
+            </td>
+            <td>
+                <a href="{% url 'show_student' id=std.student.id %}">Показать</a>
+            </td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+
+{% endblock %}

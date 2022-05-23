@@ -8,7 +8,7 @@ from pkg_resources import require
 from .models import *
 from people.models import *
 
-class AddPersonForm(forms.ModelForm):
+class UpdatePersonForm(forms.ModelForm):
     class Meta:
         model = Person
         fields = ['first_name', 'last_name', 'birth_date']
@@ -90,19 +90,3 @@ class AddStudentForm(forms.Form):
         student = Student.objects.create(person=person)
         return student
    
-
-    # gender = models.CharField(
-    #     max_length=2,
-    #     choices=Gender.choices,
-    #     default=Gender.NONE,
-    # )
-    # city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
-    # region = models.ForeignKey(Region, on_delete=models.SET_NULL, blank=True, null=True)
-    # nationality = models.ForeignKey(Nationality, on_delete=models.SET_NULL, blank=True, null=True)
-
-
-    # contact_type = models.CharField(
-    #     max_length=3,
-    #     choices=ContactType.choices,
-    #     default=ContactType.STUDENT,
-    # )
