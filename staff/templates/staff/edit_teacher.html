@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block page_content %}
+<div>
+  <h2>Форма редактирования профиля учителя</h2>
+  <form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {% for teacher in form %}
+    <div class="form-group row">
+      <label class="col-sm-4 col-form-label" for='{{ teacher.id_for_label }}'>{{ teacher.label }}</label>
+      <div class="col-sm-8">
+        {{ teacher }}
+      </div>
+      <div class="form-error text-danger">{{ teacher.errors }}</div>
+    </div>
+    {% endfor %}
+    <input type="submit" value="Сохранить" class="w-25 btn btn-sm btn-success">
+    <input type="reset" value="Сбросить" class="w-25 btn btn-sm btn-secondary">
+  </form>
+</div>
+{% endblock %}

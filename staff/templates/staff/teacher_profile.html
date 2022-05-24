@@ -1,14 +1,40 @@
 {% extends "base.html" %}
 {% load static %}
 {% block page_content %}
-<h2>Мой профиль</h2>
-{% if teacher.avatar %}
-<p><img src='{{teacher.avatar.url}}' alt="avatar" width="100" height="100"></p>
-{% endif %}
-<p>Фамилия: {{ teacher.last_name }}</p>
-<p>Имя: {{ teacher.first_name }}</p>
-<p>Отчество: {{ teacher.middle_name }}</p>
-<p>Пол: {{ teacher.get_gender_display }}</p>
-<p>Дата рождения: {{ teacher.birth_date }}</p>
-<p>Телефон: {{ teacher.phone }}</p>
+<div class="teaccher_profile_block">
+    <h2>Мой профиль</h2>
+    {% if teacher.avatar %}
+    <p><img src='{{teacher.avatar.url}}' alt="avatar" width="100" height="100"></p>
+    {% endif %}
+    <div class="row mb-1">
+        <div class="col-2">Фамилия:</div>
+        <div class="col-8">{{ teacher.last_name }}</div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">Имя:</div>
+        <div class="col-8">{{ teacher.first_name }}</div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">Отчество:</div>
+        <div class="col-8">{{ teacher.middle_name }}</div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">Пол:</div>
+        <div class="col-8">{{ teacher.get_gender_display }}</div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-2">Дата рождения:</div>
+        <div class="col-8">{{ teacher.birth_date }}</div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-2">Телефон:</div>
+        <div class="col-8">{{ teacher.phone }}</div>
+    </div>
+    <div class="row mb-1">
+        <div class="col-8">
+            <a href="{% url 'edit_teacher' id=teacher.id %}" class="w-25 btn btn-sm btn-success">Редактировать</a>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
 {% endblock %}
