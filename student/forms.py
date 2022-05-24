@@ -2,7 +2,6 @@ from cProfile import label
 from django import forms
 from tkinter import Widget
 from urllib import request
-from django import forms
 from phonenumber_field.formfields import PhoneNumberField
 from pkg_resources import require
 from .models import *
@@ -11,11 +10,31 @@ from people.models import *
 class UpdatePersonForm(forms.ModelForm):
     class Meta:
         model = Person
-        fields = ['first_name', 'last_name', 'birth_date']
+        fields = ['last_name', 'first_name', 'middle_name', 'birth_date', 'gender', 
+                  'city', 'region', 'nationality', 'registration_address', 'actual_address',
+                  'phone', 'photo']
         # widgets = {
         #     'characteristics': forms.Textarea(attrs={'cols':60, 'rows':10})
         # }
-        labels = {'first_name': 'Имя', 'last_name': 'Фамилия', 'birth_date': 'Дата рождения'}
+        labels = {'last_name': 'Фамилия', 'first_name': 'Имя', 'middle_name':'Отчество', 'birth_date': 'Дата рождения',
+                  'gender': 'Пол', 'city': 'Город', 'region': 'Область', 'nationality': 'Национальность',
+                   'registration_address': 'Адрес прописки',  'actual_address': 'Адрес проживания',
+                   'phone': 'Номер телефона', 'photo': 'Фотография'}
+        
+        widgets = {
+            'last_name': forms.TextInput(attrs={"class":"w-50 form-control"}),
+            'first_name': forms.TextInput(attrs={"class":"w-50 form-control"}),
+            'middle_name': forms.TextInput(attrs={"class":"w-50 form-control"}),
+            'birth_date': forms.DateInput(attrs={'class': 'w-50 form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'}),
+            'gender': forms.Select(attrs={'class':'w-50 form-control form-select'}),
+            'city': forms.Select(attrs={'class': 'w-50 form-control form-select'}),
+            'region': forms.Select(attrs={'class': 'w-50 form-control form-select'}),
+            'nationality': forms.Select(attrs={'class': 'w-50 form-control form-select'}),
+            'registration_address': forms.TextInput(attrs={"class":"w-50 form-control"}),
+            'actual_address': forms.TextInput(attrs={"class":"w-50 form-control"}),
+            'phone': forms.TextInput(attrs={"class":"w-50 form-control"})
+        }
 
 class AddStudentForm(forms.Form):
     CHOICES = (
@@ -30,7 +49,7 @@ class AddStudentForm(forms.Form):
     middle_name = forms.CharField(label='Отчество', max_length=100, required=False,
         widget=forms.TextInput(attrs={"class":"w-50 form-control"}))
     birth_date = forms.DateField(label='Дата рождения', required=False,
-            widget=forms.DateTimeInput(attrs={
+            widget=forms.DateInput(attrs={
             'class': 'w-50 form-control datetimepicker-input',
             'data-target': '#datetimepicker1'
         })
@@ -38,28 +57,28 @@ class AddStudentForm(forms.Form):
     gender = forms.CharField( 
         label='Пол',
         required=False, 
-        widget=forms.Select(choices=CHOICES, attrs={'class':'w-50 form-control'})
+        widget=forms.Select(choices=CHOICES, attrs={'class':'w-50 form-control form-select'})
     )
     city = forms.ModelChoiceField(label='Город', 
         queryset=City.objects.all(), 
         initial=None, 
         empty_label='Выберите город',
         required=False,
-        widget=forms.Select(attrs={'class': 'w-50 form-control'})
+        widget=forms.Select(attrs={'class': 'w-50 form-control form-select'})
     )
     region = forms.ModelChoiceField(label='Область',
         queryset=Region.objects.all(), 
         initial=None, 
         empty_label='Выберите область',
         required=False,
-        widget=forms.Select(attrs={'class': 'w-50 form-control'})
+        widget=forms.Select(attrs={'class': 'w-50 form-control form-select'})
     )
     nationality = forms.ModelChoiceField(label='Национальность',
         queryset=Nationality.objects.all(), 
         initial=None, 
         empty_label='Выберите национальность',
         required=False,
-        widget=forms.Select(attrs={'class': 'w-50 form-control'})
+        widget=forms.Select(attrs={'class': 'w-50 form-control form-select'})
     )
     registration_address = forms.CharField(label='Адрес прописки', max_length=200, required=False,
         widget=forms.TextInput(attrs={"class":"w-50 form-control"}))

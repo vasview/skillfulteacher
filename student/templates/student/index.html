@@ -31,7 +31,7 @@
                 {{ std.get_gender_display }}
             </td>
             <td>
-                {{ std.klasses.last.code }}
+                {% if  std.klasses.last.code  != None %} {{  std.klasses.last.code  }} {% endif %}
             </td>
             <td>
                 <a href="{% url 'show_student' id=std.student.id %}">Показать</a>

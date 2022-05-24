@@ -89,16 +89,27 @@ class AddStudent(LoginRequiredMixin, View):
 
 class EditStudent(LoginRequiredMixin, UpdateView):
     form_class = UpdatePersonForm
-    template_name = 'student/add_student.html'
+    template_name = 'student/edit_student.html'
+    pk_url_kwarg = 'id'
     login_url = '/login/'
 
-    def get_context_data(self, **kwargs):
-        student = Student.objects.get(id=kwargs['id'])
-        return student
+    def get_object(self):
+        id = self.kwargs.get('id')
+        student = Student.objects.get(pk=id)
+        return get_object_or_404(Person, id=student.id)
 
-    def get(self,  request, *args, **kwargs):
-        student = get_context_data(self, **kwargs)
-        person = Student.objects.get(pk=student.id).person
+    def get_success_url(self):
+        id = self.kwargs.get('id')
+        return reverse_lazy('show_student', kwargs={'id': id})
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     student = Student.objects.get(id=kwargs['id'])
+    #     return student
+
+    # def get(self,  request, *args, **kwargs):
+    #     student = get_context_data(self, **kwargs)
+    #     person = Student.objects.get(pk=student.id).person
 
     # def get(self, request, *args, **kwargs):
     #     # student = Student.objects.get(pk=request.GET['id'])

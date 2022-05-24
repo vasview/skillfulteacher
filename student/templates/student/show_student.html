@@ -2,57 +2,68 @@
 {% load static %}
 {% block page_content %}
 <div class="student_profile_block">
-    <h2>Профиль студента</h2>
+    <h2>Профиль ученика</h2>
     {% if student.person.photo %}
-    <p><img src='{{ student.person.photo }}' alt="avatar" width="100" height="100"></p>
+    <p><img src='{{ student.person.photo.url }}' alt="avatar" width="100" height="100"></p>
     {% endif %}
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Фамилия:</div>
         <div class="col-8">{{ student.person.last_name }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Имя:</div>
         <div class="col-8">{{ student.person.first_name }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Отчество:</div>
         <div class="col-8">{{ student.person.middle_name }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Пол:</div>
         <div class="col-8">{{ student.person.get_gender_display }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Дата рождения:</div>
         <div class="col-8">{{ student.person.birth_date }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Телефон:</div>
         <div class="col-8">{{ student.person.phone }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Город:</div>
-        <div class="col-8">{{ student.person.city.name }}</div>
+        <div class="col-8">
+            {% if student.person.city.name != None %} {{ student.person.city.name }} {% endif %}
+        </div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Область:</div>
-        <div class="col-8">{{ student.person.region.name }}</div>
+        <div class="col-8">
+            {% if student.person.region.name != None %} {{ student.person.region.name }} {% endif %}
+        </div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Национальность:</div>
-        <div class="col-8">{{ student.person.nationality.name }}</div>
+        <div class="col-8">
+            {% if student.person.nationality.name != None %} {{ student.person.nationality.name }} {% endif %}
+        </div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Адрес прописки:</div>
         <div class="col-8">{{ student.person.registration_address }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-1">
         <div class="col-2">Адрес проживания:</div>
         <div class="col-8">{{ student.person.actual_address }}</div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-2">Класс:</div>
-        <div class="col-8">{{ student.klasses.last.code }}</div>
+        <div class="col-8">
+            {% if  student.klasses.last.code != None %} {{  student.klasses.last.code }} {% endif %}
+        </div>
+    </div>
+    <div>
+        <a href="{% url 'edit_student' id=student.id %}" class="w-25 btn btn-sm btn-success">Редактировать</a>
     </div>
 </div>
 {% endblock %}
