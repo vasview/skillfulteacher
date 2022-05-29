@@ -14,12 +14,12 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Gender(models.TextChoices):
     NONE = 'NA', 'Не задано'
     MALE = 'M', 'Мужчина'
-    FEMALE = 'F', 'Женцина'
+    FEMALE = 'F', 'Женщина'
 
 class ContactType(models.TextChoices):
     NONE = 'NON', 'Не задано'
     STUDENT = 'STD', 'Студент'
-    PARRENT = 'PRT', 'Родитель'
+    PARENT = 'PRT', 'Родитель'
 
 class City(models.Model):
     name = models.CharField(max_length=100)
