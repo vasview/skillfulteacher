@@ -1,4 +1,6 @@
+from multiprocessing import get_start_method
 import tempfile
+from webbrowser import get
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -41,7 +43,7 @@ def search_students(request):
         query_string=request.GET['query']
         students = Person.objects.filter(
                 Q(first_name__icontains=query_string) | Q(last_name__icontains=query_string)
-        )
+        ).filter(contact_type='STD')
         print(students)
     return render(request, 'student/index.html', { 'students': students})
 
@@ -101,6 +103,31 @@ class EditStudent(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         id = self.kwargs.get('id')
         return reverse_lazy('show_student', kwargs={'id': id})
+
+class CreateParent(LoginRequiredMixin,View):
+    form_class = AddParentForm
+    template_name = 'student/add_parent.html'
+    login_url = '/login/'
+
+    def get_student(self):
+        id = self.kwargs.get('id')
+        student = Student.objects.get(pk=id)
+        return get_object_or_404(Student, id=id)
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class()
+        student = self.get_student()
+        return render(request, self.template_name, {'form': form, 'student': student})
+
+    def post(self, request, *args, **kwargs):
+        student = self.get_student()
+        form = self.form_class(request.POST,  request.FILES)
+        if form.is_valid():
+            parent = form.save()
+            student.parents.add(parent)
+            return redirect('show_student', id = student.id)
+        else:
+            return render(request, self.template_name, {'form': form, 'student': student})
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)

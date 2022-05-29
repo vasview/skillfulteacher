@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block page_content %}
+<div>
+  <h2>Форма добавления родителя</h2>
+  <form action="{% url 'add_student_parent' student.id %}" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    {% for person in form %}
+    <div class="form-group row mb-1">
+      <label class="col-sm-4 col-form-label" for='{{ person.id_for_label }}'>{{ person.label }}</label>
+      <div class="col-sm-8">
+        {{ person }}
+      </div>
+      <div class="form-error">{{ person.errors }}</div>
+    </div>
+    {% endfor %}
+    <input type="submit" value="Сохранить" class="w-25 btn btn-sm btn-success">
+    <input type="reset" value="Сбросить" class="w-25 btn btn-sm btn-secondary">
+  </form>
+</div>
+{% endblock %}

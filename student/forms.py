@@ -6,6 +6,7 @@ from phonenumber_field.formfields import PhoneNumberField
 from pkg_resources import require
 from .models import *
 from people.models import *
+from django.forms.widgets import DateInput
 
 class UpdatePersonForm(forms.ModelForm):
     class Meta:
@@ -25,8 +26,7 @@ class UpdatePersonForm(forms.ModelForm):
             'last_name': forms.TextInput(attrs={"class":"w-50 form-control"}),
             'first_name': forms.TextInput(attrs={"class":"w-50 form-control"}),
             'middle_name': forms.TextInput(attrs={"class":"w-50 form-control"}),
-            'birth_date': forms.DateInput(attrs={'class': 'w-50 form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'}),
+            'birth_date': DateInput(attrs={'class': 'w-50 form-control', 'type': 'date'}, format='%Y-%m-%d'),
             'gender': forms.Select(attrs={'class':'w-50 form-control form-select'}),
             'city': forms.Select(attrs={'class': 'w-50 form-control form-select'}),
             'region': forms.Select(attrs={'class': 'w-50 form-control form-select'}),
@@ -36,11 +36,11 @@ class UpdatePersonForm(forms.ModelForm):
             'phone': forms.TextInput(attrs={"class":"w-50 form-control"})
         }
 
-class AddStudentForm(forms.Form):
+class AddPersonForm(forms.Form):
     CHOICES = (
         ('NA', 'Не задано'),
         ('M', 'Мужчина'),
-        ('F', 'Женцина')
+        ('F', 'Женщина')
     )
     last_name = forms.CharField(label='Фамилия', min_length=1, max_length=100, required=True, 
         widget=forms.TextInput(attrs={"class":"w-50 form-control"}))
@@ -49,10 +49,7 @@ class AddStudentForm(forms.Form):
     middle_name = forms.CharField(label='Отчество', max_length=100, required=False,
         widget=forms.TextInput(attrs={"class":"w-50 form-control"}))
     birth_date = forms.DateField(label='Дата рождения', required=False,
-            widget=forms.DateInput(attrs={
-            'class': 'w-50 form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
+            widget=DateInput(attrs={'class': 'w-50 form-control'})
     )
     gender = forms.CharField( 
         label='Пол',
@@ -106,6 +103,25 @@ class AddStudentForm(forms.Form):
             photo = self.cleaned_data['photo']
         )
         person.save()
+        return person
+
+class AddStudentForm(AddPersonForm):
+   def save(self, *args, **kwargs):
+        person = super().save( *args, **kwargs)
         student = Student.objects.create(person=person)
         return student
-   
+
+
+class AddParentForm(AddPersonForm):
+    relation_type = forms.CharField(label='Вид родства',
+        required=False, 
+        widget=forms.Select(choices=ParrentType.choices, attrs={'class':'w-50 form-control form-select'})
+    )
+
+    def save(self, *args, **kwargs):
+        person = super().save( *args, **kwargs)
+        person.contact_type = ContactType.PARENT
+        person.save()
+        relation = self.cleaned_data['relation_type']
+        parent = Parent.objects.create(person=person, relation_type=relation)
+        return parent
