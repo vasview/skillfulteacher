@@ -3,7 +3,7 @@
 {% block page_content %}
 <div>
   <h2>Форма редактирования ученика</h2>
-  <form enctype="multipart/form-data" method="post">
+  <form action="{% url 'edit_student' person.student.id %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {% for person in form %}
     <div class="form-group row mb-1">
