@@ -65,6 +65,7 @@ class Person(models.Model):
         choices=Gender.choices,
         default=Gender.NONE,
     )
+    personal_number = models.SmallIntegerField(blank=True, null=True)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, blank=True, null=True)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, blank=True, null=True)
     nationality = models.ForeignKey(Nationality, on_delete=models.SET_NULL, blank=True, null=True)
