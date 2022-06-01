@@ -29,7 +29,6 @@ class Student(models.Model):
         'student.Group',
         through = 'student.GroupMember'
     )
-    characteristics = models.TextField(blank=True, null=True)
     active = models.BooleanField(default=True)
 
     class Meta:
@@ -43,15 +42,16 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('show_student', kwargs={'id': self.pk})
 
-class StudentPortfolio(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.PROTECT)
-    characteristics = models.TextField(blank=True, null=True)
+class StudentReview(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.PROTECT, related_name='reviews')
+    title = models.CharField(max_length=255)
+    characteristic = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 class Parent(models.Model):
     person = models.OneToOneField('people.Person', on_delete=models.PROTECT)
-    student = models.ManyToManyField(Student, related_name='parents')
+    students = models.ManyToManyField(Student, related_name='parents')
     relation_type = models.CharField(
         max_length=3,
         choices=ParrentType.choices,

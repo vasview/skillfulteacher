@@ -1,10 +1,11 @@
+
 {% extends "base.html" %}
 {% load static %} 
 {% block page_content %}
 <div>
-  <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-primary ml-2">Назад</a>
+    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-primary ml-2">Назад</a>
   <h2>Форма добавления родителя</h2>
-  <form action="{% url 'add_student_parent' student.id %}" enctype="multipart/form-data" method="post">
+  <form action="{% url 'edit_parent' person.parent.id %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {% for person in form %}
     <div class="form-group row mb-1">

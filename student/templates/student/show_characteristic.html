@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block page_content %}
+<div class="student_review_block">
+    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-primary ml-2">Назад</a>
+    <h3>Характеристика на ученика: 
+        <a href="{% url 'show_student' review.student.id %}"> 
+            <i>{{ review.student.person.full_name }}</i>
+        </a>
+    </h3>
+    <div class="row mb-1">
+        <div class="col-4"><h4>Название:</h4></div>
+        <div class="col-8">{{ review.title }}</div>
+    </div>
+    <div class="row mb-3">
+        <textarea readonly class="" name='characteristic' id="characteristic" rows="10">{{ review.characteristic }}</textarea>
+    </div> 
+    <div class="row mb-1">
+        <a href="{% url 'edit_review' id=review.id %}" class="w-50 btn btn-sm btn-success">Редактировать</a>
+    </div>
+</div>
+{% endblock %}

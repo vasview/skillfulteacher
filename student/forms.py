@@ -1,4 +1,5 @@
 from cProfile import label
+from winreg import KEY_READ
 from django import forms
 from tkinter import Widget
 from urllib import request
@@ -14,9 +15,7 @@ class UpdatePersonForm(forms.ModelForm):
         fields = ['last_name', 'first_name', 'middle_name', 'birth_date', 'gender', 
                   'city', 'region', 'nationality', 'registration_address', 'actual_address',
                   'phone', 'photo']
-        # widgets = {
-        #     'characteristics': forms.Textarea(attrs={'cols':60, 'rows':10})
-        # }
+
         labels = {'last_name': 'Фамилия', 'first_name': 'Имя', 'middle_name':'Отчество', 'birth_date': 'Дата рождения',
                   'gender': 'Пол', 'city': 'Город', 'region': 'Область', 'nationality': 'Национальность',
                    'registration_address': 'Адрес прописки',  'actual_address': 'Адрес проживания',
@@ -125,3 +124,9 @@ class AddParentForm(AddPersonForm):
         relation = self.cleaned_data['relation_type']
         parent = Parent.objects.create(person=person, relation_type=relation)
         return parent
+
+class StudentPortfolioForm(forms.ModelForm):
+    class Meta:
+        model = StudentReview
+        fields = [ 'title','characteristic',]
+        labels = {'title': 'Название', 'characteristic': 'характеристика'} 

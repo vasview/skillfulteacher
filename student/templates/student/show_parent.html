@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<div class="parent_profile_block">
+    <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-primary ml-2">Назад</a>
+    <h2>Профиль родителя ученика</h2>
+    <div class="parent_profile_wrapper row">
+        <div class="parent_details col-6">
+            {% if parent.person.photo %}
+            <div class="mb-1">
+                <img src='{{ parent.person.photo.url }}' alt="avatar" class="img-thumbnail">
+            </div>
+            {% endif %}
+            <div class="row mb-1">
+                <div class="col-4">Фамилия:</div>
+                <div class="col-8">{{ parent.person.last_name }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Имя:</div>
+                <div class="col-8">{{ parent.person.first_name }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Отчество:</div>
+                <div class="col-8">{{ parent.person.middle_name }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Пол:</div>
+                <div class="col-8">{{ parent.person.get_gender_display }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Дата рождения:</div>
+                <div class="col-8">{{ parent.person.birth_date }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Телефон:</div>
+                <div class="col-8">{{ parent.person.phone }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Город:</div>
+                <div class="col-8">
+                    {% if parent.person.city.name != None %} {{ parent.person.city.name }} {% endif %}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Область:</div>
+                <div class="col-8">
+                    {% if parent.person.region.name != None %} {{ parent.person.region.name }} {% endif %}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Национальность:</div>
+                <div class="col-8">
+                    {% if parent.person.nationality.name != None %} {{ parent.person.nationality.name }} {% endif %}
+                </div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Адрес прописки:</div>
+                <div class="col-8">{{ parent.person.registration_address }}</div>
+            </div>
+            <div class="row mb-1">
+                <div class="col-4">Адрес проживания:</div>
+                <div class="col-8">{{ parent.person.actual_address }}</div>
+            </div>
+            <div class="row mb-1">
+                <a href="{% url 'edit_parent' id=parent.id %}" class="w-50 btn btn-sm btn-success">Редактировать</a>
+            </div>
+        </div>
+        <div class="parent_extra_info col-6">
+            <h3>Дети родителя</h3>
+            {% for student in parent.students.all %}
+            <div class="row mb-4">
+                <div class="col-6">ФИО ученика:</div>
+                <div class="col-4">Класс:</div>
+                <div class="col-2">Действие:</div>
+                <div class="col-6">{{ student.person.full_name }}</div>
+                <div class="col-4">
+                    {% if  student.klasses.last.code != None %} {{  student.klasses.last.code }} {% endif %}
+                </div>
+                <div class="col-2">
+                    <a href="{% url 'show_student' student.id %}" class="mx-1" title="Просмотреть">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-binoculars" viewBox="0 0 16 16">
+                            <path d="M3 2.5A1.5 1.5 0 0 1 4.5 1h1A1.5 1.5 0 0 1 7 2.5V5h2V2.5A1.5 1.5 0 0 1 10.5 1h1A1.5 1.5 0 0 1 13 2.5v2.382a.5.5 0 0 0 .276.447l.895.447A1.5 1.5 0 0 1 15 7.118V14.5a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 14.5v-3a.5.5 0 0 1 .146-.354l.854-.853V9.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v.793l.854.853A.5.5 0 0 1 7 11.5v3A1.5 1.5 0 0 1 5.5 16h-3A1.5 1.5 0 0 1 1 14.5V7.118a1.5 1.5 0 0 1 .83-1.342l.894-.447A.5.5 0 0 0 3 4.882V2.5zM4.5 2a.5.5 0 0 0-.5.5V3h2v-.5a.5.5 0 0 0-.5-.5h-1zM6 4H4v.882a1.5 1.5 0 0 1-.83 1.342l-.894.447A.5.5 0 0 0 2 7.118V13h4v-1.293l-.854-.853A.5.5 0 0 1 5 10.5v-1A1.5 1.5 0 0 1 6.5 8h3A1.5 1.5 0 0 1 11 9.5v1a.5.5 0 0 1-.146.354l-.854.853V13h4V7.118a.5.5 0 0 0-.276-.447l-.895-.447A1.5 1.5 0 0 1 12 4.882V4h-2v1.5a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V4zm4-1h2v-.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5V3zm4 11h-4v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14zm-8 0H2v.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5V14z"/>
+                        </svg>
+                    </a>
+                    <a href="{% url 'edit_student' student.id %}" class="mx-1" title="Редактировать">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+            <!-- <div class="row mb-4">
+                <div class="col-4">ФИО родителя:</div>
+                <div class="col-8">{{ student.person.last_name }}</div>
+            </div> -->
+            <!-- <div class="row mb-4">
+                <a href="{#% url 'add_student_parent' id=student.id %#}" class="w-50 btn btn-sm btn-success">Добавить ребенка</a>
+            </div> -->
+        </div>
+    </div>
+</div>
+{% endblock %}
