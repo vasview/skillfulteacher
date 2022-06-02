@@ -6,7 +6,7 @@
   <form action="{% url 'edit_teacher' teacher.id %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {% for teacher in form %}
-    <div class="form-group row">
+    <div class="form-group row mb-1">
       <label class="col-sm-4 col-form-label" for='{{ teacher.id_for_label }}'>{{ teacher.label }}</label>
       <div class="col-sm-8">
         {{ teacher }}
