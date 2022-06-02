@@ -48,7 +48,7 @@ class AddPersonForm(forms.Form):
     middle_name = forms.CharField(label='Отчество', max_length=100, required=False,
         widget=forms.TextInput(attrs={"class":"w-50 form-control"}))
     birth_date = forms.DateField(label='Дата рождения', required=False,
-            widget=DateInput(attrs={'class': 'w-50 form-control'})
+        widget=DateInput(attrs={'class': 'w-50 form-control', 'type': 'date'}, format='%Y-%m-%d')
     )
     gender = forms.CharField( 
         label='Пол',
@@ -130,3 +130,13 @@ class StudentPortfolioForm(forms.ModelForm):
         model = StudentReview
         fields = [ 'title','characteristic',]
         labels = {'title': 'Название', 'characteristic': 'характеристика'} 
+
+class StudentDocumentForm(forms.ModelForm):
+    class Meta:
+        model = StudentDocument
+        fields = [ 'name','file',]
+        labels = {'name': 'Название', 'file': 'Документ'} 
+
+        widgets = {
+            'name': forms.TextInput(attrs={"class":"w-50 form-control"}),
+        }

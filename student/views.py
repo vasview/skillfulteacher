@@ -145,8 +145,8 @@ class DeleteParent(LoginRequiredMixin, DeleteView):
         return reverse_lazy('show_student', kwargs={'id': id})
 
 
-# section related to student characteristics
-class CreateStudentReview(LoginRequiredMixin, StudentMixin, View):
+### section related to student characteristics ###
+class CreateStudentReview(LoginRequiredMixin, View):
     form_class = StudentPortfolioForm
     template_name = 'student/create_characteristic.html'
     login_url = '/login/'
@@ -208,3 +208,58 @@ class DeleteStudentReview(LoginRequiredMixin, DeleteView):
         id = self.kwargs.get('id')
         return reverse_lazy('show_student', kwargs={'id': id})
 
+### section related to student documents ###
+class AddStudentDocument(LoginRequiredMixin, View):
+    form_class = StudentDocumentForm
+    template_name = 'student/add_student_document.html'
+    login_url = '/login/'
+
+    def get_student(self):
+        id = self.kwargs.get('id')
+        student = Student.objects.get(pk=id)
+        return get_object_or_404(Student, id=id)
+
+    def get(self, request, *args, **kwargs):
+        student = self.get_student()
+        form = self.form_class()
+        return render(request, self.template_name, {'form': form, 'student': student})
+
+    def post(self, request, *args, **kwargs):
+        student = self.get_student()
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.student = student
+            form.save()
+            return redirect('show_student', id = student.id)
+        else:
+            return render(request, self.template_name, {'form': form, 'student': student})
+
+class EditStudentDocument(LoginRequiredMixin, UpdateView):
+    form_class = StudentDocumentForm
+    context_object_name = 'document'
+    template_name = 'student/edit_student_document.html'
+    pk_url_kwarg = 'doc_id'
+    login_url = '/login/'
+
+    def get_object(self):
+        id = self.kwargs.get('doc_id')
+        return get_object_or_404(StudentDocument, pk=id)
+
+    def get_success_url(self):
+        id = self.kwargs.get('id')
+        return reverse_lazy('show_student', kwargs={'id': id})
+
+class DeleteStudentDocument(LoginRequiredMixin, DeleteView):
+    model = StudentDocument
+    pk_url_kwarg = 'doc_id'
+    template_name = 'student/confirm_delete.html'
+    login_url = '/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'документ ученика'
+        return context
+
+    def get_success_url(self):
+        id = self.kwargs.get('id')
+        return reverse_lazy('show_student', kwargs={'id': id})

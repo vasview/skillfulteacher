@@ -14,5 +14,10 @@ urlpatterns = [
     path('<int:id>/reviews/<int:review_id>/delete', DeleteStudentReview.as_view(), name='delete_student_review'),
     path('reviews/<int:id>', ShowStudentReview.as_view(), name='show_review'),
     path('reviews/<int:id>/edit', EditStudentReview.as_view(), name='edit_review'),
+
+    path('<int:id>/add_document', AddStudentDocument.as_view(), name='add_student_document'),
+    path('<int:id>/docs/<int:doc_id>/delete', DeleteStudentDocument.as_view(), name='delete_student_document'),
+    path('<int:id>/docs/<int:doc_id>/edit', EditStudentDocument.as_view(), name='edit_student_document'),
+
     path('search/', search_students, name='search_students'),
 ]

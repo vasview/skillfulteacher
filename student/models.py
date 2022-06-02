@@ -83,7 +83,7 @@ class StudentKlass(models.Model):
 class StudentDocument(models.Model):
     name = models.CharField(max_length=100)
     file = models.FileField(upload_to="student_docs/%Y/%m%d/")
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='student_documents')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
