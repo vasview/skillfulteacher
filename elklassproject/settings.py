@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'staff.apps.StaffConfig',
     'student.apps.StudentConfig',
     'people.apps.PeopleConfig',
+    'reports.apps.ReportsConfig',
+    'statsdata.apps.StatsdataConfig',
 ]
 
 MIDDLEWARE = [

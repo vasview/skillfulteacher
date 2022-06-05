@@ -5,6 +5,9 @@
         {% if request.user.is_authenticated %}
         {% if request.user.teacher %}
           <li class="top_menu_item">
+            <a href="{% url 'list_teacher_document' id=request.user.teacher.id %}">Мои документы</a>
+          </li>
+          <li class="top_menu_item">
             <a href="{% url 'show_teacher' id=request.user.teacher.id %}">Мой профиль</a>
           </li>
         {% endif %}
