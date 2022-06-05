@@ -42,6 +42,13 @@ def user_logout(request):
     logout(request)
     return redirect(reverse_lazy('home'))
 
+### End points related to klasses in the School
+
+def all_klasses(request):
+    klasses = Klass.objects.all()
+    context = {'klasses': klasses}
+    return render(request, 'school/all_klasses.html', context=context)
+
 def show_klass(request, klass_id):
     klass = get_object_or_404(pk=klass_id)
 

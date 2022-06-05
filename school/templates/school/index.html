@@ -5,10 +5,12 @@
 <div class="tab_cover_wrapper">
     <div class="tab_itmes">
       <div class="tab_item_block">
-        <div class="tab_item_cover">
-          <img src="{% static 'images/statistics.png' %}">
-        </div>
-        <div class="tab_item_title">Статистика</div>
+        <a href="{% url 'all_klasses' %}">
+          <div class="tab_item_cover">
+            <img src="{% static 'images/klass.png' %}">
+          </div>
+          <div class="tab_item_title">Классы</div>
+        </a>
       </div>
       <div class="tab_item_block">
         <div class="tab_item_cover">
@@ -25,10 +27,12 @@
         </a>
       </div>
       <div class="tab_item_block">
-        <div class="tab_item_cover">
-            <img src="{% static 'images/reports.jpg' %}">
-        </div>
-        <div class="tab_item_title">Отчеты</div>
+        <a href="{% url 'reports' %}">
+          <div class="tab_item_cover">
+              <img src="{% static 'images/reports.jpg' %}">
+          </div>
+          <div class="tab_item_title">Отчеты</div>
+        </a>
       </div>
     </div>
   </div>
