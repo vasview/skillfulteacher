@@ -19,3 +19,13 @@ class UpdateTeacherForm(forms.ModelForm):
             'gender': forms.Select(attrs={'class':'w-50 form-control'}),
             'phone': forms.TextInput(attrs={"class":"w-50 form-control"})
         }
+
+class TeacherDocumentForm(forms.ModelForm):
+    class Meta:
+        model = TeacherDocument
+        fields = [ 'name','file',]
+        labels = {'name': 'Название', 'file': 'Документ'} 
+
+        widgets = {
+            'name': forms.TextInput(attrs={"class":"w-50 form-control"}),
+        }
