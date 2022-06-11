@@ -3,9 +3,8 @@
 {% block page_content %}
 <h2>Список учеников</h2>
 <table class="table table-hover">
-    <thead>
+    <thead class="table-light">
         <tr>
-            <th scope="col"></th>
             <th scope="col">ФИО ученика</th>
             <th scope="col">Дата Рождения</th>
             <th scope="col">Активный</th>
@@ -17,7 +16,6 @@
     <tbody>
         {% for std in students %}
         <tr>
-            <td scope="row"><input type="checkbox" /></td>
             <td>
                 {{ std.full_name }}
             </td>
@@ -31,7 +29,7 @@
                 {{ std.get_gender_display }}
             </td>
             <td>
-                {% if  std.klasses.last.code  != None %} {{  std.klasses.last.code  }} {% endif %}
+                {% if  std.student.klasses.last.code  != None %} {{  std.student.klasses.last.code  }} {% endif %}
             </td>
             <td>
                 <a href="{% url 'show_student' id=std.student.id %}" class="mx-2" title="Просмотреть">

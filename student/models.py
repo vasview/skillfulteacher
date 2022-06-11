@@ -68,7 +68,7 @@ class Parent(models.Model):
 
 class StudentKlass(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    klass = models.ForeignKey('school.Klass', on_delete=models.PROTECT)
+    klass = models.ForeignKey('school.Klass', on_delete=models.PROTECT, related_name='students')
     date_from = models.DateField(auto_now_add=True)
     date_to = models.DateField(blank=True, null=True)
 
