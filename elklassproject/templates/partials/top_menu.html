@@ -1,12 +1,28 @@
-<div id="nav_bar">
-  <div class="container">
-    <ul class="nav_menu">
-      <li class="menu_item"><a href="{% url 'all_klasses' %}">Классы</a></li>
-      <li class="menu_item"><a href="{% url 'students' %}">Ученики</a></li>
-      <li class="menu_item"><a href="{% url 'add_student' %}">Добавить ученика</a></li>
-      <li class="menu_item"><a href="">Поиск учеников</a></li>
-      <li class="menu_item"><a href="">Табеля</a></li>
-      <li class="menu_item"><a href="{% url 'reports' %}">Отчеты</a></li>
-    </ul>
+<nav id="nav_bar" class="navbar navbar-expand-md">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSchool" aria-controls="navbarSchool" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSchool"></div>
+      <ul class="nav_menu navbar-nav me-auto mb-2 mb-md-0">
+        <li class="menu_item nav-item"><a href="{% url 'all_klasses' %}" class="nav-link">Классы</a></li>
+        <li class="menu_item nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Ученики</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li><a class="dropdown-item" href="{% url 'students' %}">Список учеников</a></li>
+              <li><a class="dropdown-item" href="{% url 'add_student' %}">Добавить ученика</a></li>
+            </ul>
+        </li>
+        <li class="menu_item nav-item">
+          <a href="" class="nav-link">Поиск учеников</a>
+        </li>
+        <li class="menu_item nav-item">
+          <a href="" class="nav-link">Табеля</a>
+        </li>
+        <li class="menu_item nav-item">
+          <a href="{% url 'reports' %}" class="nav-link">Отчеты</a>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
+</nav>
