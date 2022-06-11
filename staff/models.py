@@ -2,6 +2,7 @@ from contextlib import nullcontext
 from distutils.command.upload import upload
 from email.policy import default
 from hashlib import blake2b
+from lib2to3.pgen2.pgen import DFAState
 from pickle import TRUE
 from statistics import mode
 from tabnanny import verbose
@@ -98,8 +99,16 @@ class TeacherDocument(models.Model):
 class JobPositionChange(models.Model):
     job_position = models.ForeignKey(JobPosition, on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    date_from = models.DateField(auto_now_add=True)
-    date_to = models.DateField()
+    date_from = models.DateField(null=False)
+    date_to = models.DateField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'История смены должностей сотрудниками'
+        verbose_name_plural = 'История смены должностей сотрудниками'
+        ordering = ['job_position', 'date_from']
+
+    def _str_(self):
+        return "%s %s" % (self.teacher.full_name, self.job_position.title)
 
 class TeacherStudent(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)

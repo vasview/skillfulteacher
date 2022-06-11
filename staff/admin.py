@@ -14,6 +14,26 @@ class TeacherAdmin(admin.ModelAdmin):
     def user_active(self, obj):
         return obj.user.is_active
 
+class TeacherDocumentAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'teacher')
+    list_display_links = ('id', 'name')
+    search_fields = ('name', 'teacher')
+
+    def teacher(self, obj):
+        return obj.teacher.full_name
+
+class JobPositionChangeAdmin(admin.ModelAdmin):
+    list_display = ('id', 'job_position', 'teacher', 'date_from', 'date_to')
+    list_display_links = ('id', 'job_position', 'teacher')
+    # search_fields = ('job_position', 'teacher')
+
+    def teacher(self, obj):
+        return obj.teacher.full_name
+
+    def job_position(self, obj):
+        return obj.job_position.title
+
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(JobPosition)
-admin.site.register(TeacherDocument)
+admin.site.register(TeacherDocument, TeacherDocumentAdmin)
+admin.site.register(JobPositionChange, JobPositionChangeAdmin)

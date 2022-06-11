@@ -70,7 +70,6 @@ class AddTeacherDocument(LoginRequiredMixin, View):
 
     def get_teacher(self):
         id = self.kwargs.get('id')
-        teacher = Teacher.objects.get(pk=id)
         return get_object_or_404(Teacher, id=id)
 
     def get(self, request, *args, **kwargs):
