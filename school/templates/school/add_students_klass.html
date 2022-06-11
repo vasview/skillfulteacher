@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block page_content %}
+<div class="add_student_klass_block">
+    <h3>Выберите ученика(ов) для добавления в класс:</h3>
+    <form action="{% url 'add_students_klass' id=klass.id %}" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+        <input type="hidden" id="klass" name="klass" value="{{ klass.id }}" />
+        <div class="add_student_klass_wrapper row">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">ФИО ученика</th>
+                        <th scope="col">Дата Рождения</th>
+                        <th scope="col">Активный</th>
+                        <th scope="col">Пол</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for std in students %}
+                    <tr>
+                        <td scope="row">
+                            <input type="checkbox" id="student_{{ std.id }}" value="{{ std.id }}" name="students" class="lg-checkbox"/>
+                        </td>
+                        <td>
+                            {{ std.person.full_name }}
+                        </td>
+                        <td>
+                            {{ std.person.birth_date }}
+                        </td>
+                        <td>
+                            {{ std.person.student.active }}
+                        </td>
+                        <td>
+                            {{ std.person.get_gender_display }}
+                        </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>  
+        <input type="submit" value="Сохранить" class="w-25 btn btn-sm btn-success">
+        <input type="reset" value="Сбросить" class="w-25 btn btn-sm btn-secondary">
+      </form>
+</div>
+{% endblock %}

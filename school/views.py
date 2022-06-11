@@ -1,13 +1,17 @@
 from lib2to3.pgen2.pgen import DFAState
+from multiprocessing import context
 from multiprocessing.spawn import import_main_path
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import View, ListView, DetailView, CreateView
+from django.views.generic import View, ListView, DetailView, CreateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from school.forms import *
+from student.models import *
+from .models import *
 
 class SchoolHome(View):
     def get(self,request,*args, **kwargs):
@@ -44,16 +48,117 @@ def user_logout(request):
 
 ### End points related to klasses in the School
 
-def all_klasses(request):
-    klasses = Klass.objects.all()
-    context = {'klasses': klasses}
-    return render(request, 'school/all_klasses.html', context=context)
+class AllKlasses(LoginRequiredMixin, ListView):
+    model = Klass
+    context_object_name = 'klasses'
+    template_name = 'school/all_klasses.html'
+    login_url = '/login/'
 
-def show_klass(request, klass_id):
-    klass = get_object_or_404(pk=klass_id)
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        teacher = self.request.user.teacher
+        teacher_klasses = ClassroomTeacher.objects.filter(teacher=teacher)
+        context['teacher_klasses'] = teacher_klasses
+        return context
 
-    context = {
-        'klass': klass
-    }
+class ShowKlass(LoginRequiredMixin, DetailView):
+    model = Klass
+    content_object_name = 'klass'
+    pk_url_kwarg = 'id'
+    template_name = 'school/klass_details.html'
+    login_url = '/login/'
 
-    return render(request, 'school/klass.html', context=context)
+    def get_klass(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Klass, id=id)
+    
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        klass = self.get_klass()
+        students = Student.objects.filter(klasses__id=klass.id)
+        context['students'] = students
+        return context
+
+class AddStudentsInKlass(LoginRequiredMixin, View):
+    form_class = StudentKlassForm
+    template_name = 'school/add_students_klass.html'
+    login_url = '/login/'
+
+    def get_klass(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Klass, id=id)
+
+    def get_student(self, student_id):
+        return get_object_or_404(Student, id = student_id)
+
+    def get_context_data(self, **kwargs):
+        klass = self.get_klass()
+        context = {'klass': klass}
+        students_in_klass = StudentKlass.objects.filter(klass=klass).values_list('student_id', flat=True)
+        context['students'] = Student.objects.all().exclude(id__in=students_in_klass)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        # klass = self.get_klass()
+        form = self.form_class()
+        context = self.get_context_data()
+        context['form'] = form
+        # if context['students']:
+        return render(request, self.template_name, context)
+        # else:
+            # return redirect('show_klass', id = klass.id)
+
+    def post(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        students = request.POST.getlist('students')
+
+        if students:
+            for std in students: 
+                student = self.get_student(std)
+                form = StudentKlassForm(request.POST, initial={'klass': klass, 'student': student})
+                if form.is_valid():
+                    form.save()
+            return redirect('show_klass', id = klass.id)
+        else:
+            form = self.form_class(request.POST)
+            return render(request, self.template_name, {'form': form, 'klass': klass})
+
+class RemoveStudentFromKlass(LoginRequiredMixin, View):
+    # model = StudentKlass
+    # pk_url_kwarg = 'review_id'
+    template_name = 'delete_confirmation.html'
+    login_url = '/login/'
+
+    def get_klass(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Klass, id=id)
+
+    def get_student(self):
+        student_id = self.kwargs.get('std_id')
+        return get_object_or_404(Student, id = student_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'удалить ученика из класса'
+        return context
+
+    def get(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        student = self.get_student()
+        if klass and student:
+            context = {'title': 'удалить ученика из класса'}
+            return render(request, self.template_name, context)
+        else:
+            return redirect('show_klass', id = klass.id)
+
+    def post(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        student = self.get_student()
+        if klass and student:
+            StudentKlass.objects.get(klass = klass, student = student).delete()
+
+        return redirect('show_klass', id = klass.id)
+
+    # def get_success_url(self):
+    #     id = self.kwargs.get('id')
+    #     return reverse_lazy('show_klass', kwargs={'id': id})

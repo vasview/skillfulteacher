@@ -89,8 +89,8 @@ class Subject(models.Model):
         return self.name
 
 class TeacherSubject(models.Model):
-    teacher = models.ForeignKey('staff.Teacher', on_delete=models.CASCADE)
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    teacher = models.ForeignKey('staff.Teacher', on_delete=models.CASCADE, related_name='teacher_subjects')
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name='teacher_subjects')
     main = models.BooleanField(default=False)
 
     class Meta:
@@ -102,8 +102,8 @@ class TeacherSubject(models.Model):
         return self.subject.name + ' ' + self.teacher.full_name
 
 class ClassroomTeacher(models.Model):
-    teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True)
-    klass = models.ForeignKey(Klass, on_delete=models.SET_NULL, blank=True, null=True)
+    teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True, related_name='classroom_teachers')
+    klass = models.ForeignKey(Klass, on_delete=models.SET_NULL, blank=True, null=True, related_name='classroom_teachers')
     date_from = models.DateField(auto_now_add=True)
     date_to = models.DateField(blank=True, null=True)
 
