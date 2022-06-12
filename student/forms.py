@@ -8,6 +8,7 @@ from pkg_resources import require
 from .models import *
 from people.models import *
 from django.forms.widgets import DateInput
+from tinymce.widgets import TinyMCE
 
 class UpdatePersonForm(forms.ModelForm):
     class Meta:
@@ -129,7 +130,7 @@ class StudentPortfolioForm(forms.ModelForm):
     class Meta:
         model = StudentReview
         fields = [ 'title','characteristic',]
-        labels = {'title': 'Название', 'characteristic': 'характеристика'} 
+        labels = {'title': 'Название', 'characteristic': 'Xарактеристика'} 
 
 class StudentDocumentForm(forms.ModelForm):
     class Meta:

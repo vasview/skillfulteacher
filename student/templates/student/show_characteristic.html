@@ -10,10 +10,10 @@
     </h3>
     <div class="row mb-1">
         <div class="col-4"><h4>Название:</h4></div>
-        <div class="col-8">{{ review.title }}</div>
+        <div class="col-8" style="font-size: 20px;">{{ review.title }}</div>
     </div>
-    <div class="row mb-3">
-        <textarea readonly class="" name='characteristic' id="characteristic" rows="10">{{ review.characteristic }}</textarea>
+    <div class="row mb-3" style="font-size: 20px; padding-left: 10px">
+        <span class="border border-secondary">{{ review.characteristic | safe }}</span>
     </div> 
     <div class="row mb-1">
         <a href="{% url 'edit_review' id=review.id %}" class="w-50 btn btn-sm btn-success">Редактировать</a>

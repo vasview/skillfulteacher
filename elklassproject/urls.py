@@ -17,7 +17,7 @@ import imp
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from school.views import *
 from staff.views import *
 
@@ -31,6 +31,7 @@ urlpatterns = [
     path('students/', include('student.urls')),
     path('reports/', include('reports.urls')),
     path('stats/', include('statsdata.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

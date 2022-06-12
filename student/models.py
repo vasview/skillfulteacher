@@ -12,6 +12,7 @@ from django.db import models
 from django.forms import CharField
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from django.urls import reverse
+from tinymce.models import HTMLField
 
 class ParrentType(models.TextChoices):
     NONE = 'NA', 'Не выбрано'
@@ -45,7 +46,7 @@ class Student(models.Model):
 class StudentReview(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT, related_name='reviews')
     title = models.CharField(max_length=255)
-    characteristic = models.TextField(blank=True, null=True)
+    characteristic = HTMLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
