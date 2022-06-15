@@ -3,7 +3,7 @@
 {% load static %} 
 {% block page_content %}
 <div>
-  <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-primary ml-2">Назад</a>
+  {% include "partials/back_page_link.html" %}
   <h2>Форма добавления ученика</h2>
   <form action="{% url 'add_student' %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}

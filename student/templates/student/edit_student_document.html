@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block page_content %}
 <div>
-  <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-primary ml-2">Назад</a>
+  {% include "partials/back_page_link.html" %}
   <h2>Редактировать документ</h2>
   <h3>Ученик: {{ document.student.person.full_name }}</h3>
   <form action="{% url 'edit_student_document' id=document.student.id doc_id=document.id %}" enctype="multipart/form-data" method="post">
