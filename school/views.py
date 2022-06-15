@@ -11,7 +11,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from school.forms import *
 from student.models import *
+from people.models import Person
 from .models import *
+import xlwt
 
 class SchoolHome(View):
     def get(self,request,*args, **kwargs):
@@ -162,3 +164,38 @@ class RemoveStudentFromKlass(LoginRequiredMixin, View):
     # def get_success_url(self):
     #     id = self.kwargs.get('id')
     #     return reverse_lazy('show_klass', kwargs={'id': id})
+
+# export student in a class as a list
+def export_students_xls(request, id):
+
+    klass_id = id
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="my_class_students.xls"'
+
+    workbook  = xlwt.Workbook(encoding='utf-8')
+    worksheet  = workbook.add_sheet('Ученики')
+
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['ФИО', 'Дата рождения', 'Пол', 'Телефон', ]
+
+    for col_num in range(len(columns)):
+        worksheet.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    person_ids = Student.objects.filter(klasses__id=klass_id).values_list('person_id', flat=True)
+
+    rows = Person.objects.filter(pk__in=person_ids).values_list('full_name', 'birth_date', 'gender', 'phone')
+    for row in rows:
+        row_num += 1
+        for col_num in range(len(row)):
+            worksheet.write(row_num, col_num, row[col_num], font_style)
+
+    workbook.save(response)
+    return response
