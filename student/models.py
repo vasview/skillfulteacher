@@ -45,6 +45,7 @@ class Student(models.Model):
 
 class StudentReview(models.Model):
     student = models.ForeignKey(Student, on_delete=models.PROTECT, related_name='reviews')
+    teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=255)
     characteristic = HTMLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
