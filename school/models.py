@@ -127,6 +127,7 @@ class KlassHistory(models.Model):
 class ClassRoom(models.Model):
     number = models.CharField(max_length=10)
     level = models.SmallIntegerField(blank=True, null=True)
+    owner = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True, related_name='rooms')
 
     class Meta:
         verbose_name = 'Кабинет'
@@ -138,7 +139,7 @@ class ClassRoom(models.Model):
 
 class Lesson(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True)
+    teacher = models.ForeignKey('staff.Teacher', on_delete=models.SET_NULL, blank=True, null=True, related_name='lessons')
     schoolyear = models.ForeignKey(SchoolYear, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField()
     start_time = models.DateTimeField()
@@ -153,3 +154,17 @@ class Lesson(models.Model):
 
     def __str__(self):
         return self.subject.name
+
+class ClassRoomKlass(models.Model):
+    classroom = models.ForeignKey(ClassRoom, on_delete=models.CASCADE, related_name='klasses')
+    klass = models.ForeignKey(Klass, on_delete=models.CASCADE, related_name='classrooms')
+    start_date = models.DateField()
+    end_date = models.DateTimeField()
+
+    class Meta:
+        verbose_name = 'Классный кабинет'
+        verbose_name_plural = 'Классные кабинеты'
+
+    def __str__(self):
+        return self.classroom.number + ' ' + self.klass.code
+
