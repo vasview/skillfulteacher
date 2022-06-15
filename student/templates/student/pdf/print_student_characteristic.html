@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ru">
+    {% load static %} 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Характеристика ученика {{ review.student.person.full_name }}</title>
+    </head>
+    <body style="font-size: 24px;">
+        <div class='wrapper'>
+            <div class='header' style="font-size: 28px;">
+                <p class='title' style="text-align:center;"><strong>Характеристика</strong></p>
+            </div>
+        <div>
+        <div class='details'>
+            Ученик: {{ review.student.person.full_name }} <br/>
+            Класс:  {% if  review.student.klasses.last.code != None %} {{  review.student.klasses.last.code }} {% endif %} <br/>
+            Дата: {{ today }}
+            <hr class='hrItem' />
+        </div>
+		<div class='main'>
+			{{ review.characteristic | safe }}
+		</div>
+		<div class='details'>
+			Классный руководитель: {{ teacher.full_name }}
+		</div>
+    </div>
+    </body>
+</html>

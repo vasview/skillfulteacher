@@ -1,3 +1,5 @@
+from email import utils
+from email.policy import HTTP
 from multiprocessing import get_start_method
 import tempfile
 from webbrowser import get
@@ -5,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, DeleteView, CreateView, View, UpdateView
+import elklassproject
 from student.forms import *
 from student.models import *
 from people.models import *
@@ -15,6 +18,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .mixins import *
+from django.template.loader import get_template
+from elklassproject.utils.html_to_pdf import render_to_pdf
+import datetime
+from django.template import loader
+# from django_weasyprint import WeasyTemplateResponseMixin
+# from django_weasyprint.views import WeasyTemplateResponse
 
 class ListStudents(LoginRequiredMixin, ListView):
     model = Person
@@ -156,14 +165,21 @@ class CreateStudentReview(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
         student = self.get_student()
+        teacher = request.user
         form = self.form_class()
-        return render(request, self.template_name, {'form': form, 'student': student})
+        context = {
+            'form': form, 
+            'student': student,
+            'teacher': teacher
+        }
+        return render(request, self.template_name, context)
 
     def post(self, request, *args, **kwargs):
         student = self.get_student()
         form = self.form_class(request.POST)
         if form.is_valid():
             form.instance.student = student
+            form.instance.teacher = request.user.teacher
             form.save()
             return redirect('show_student', id = student.id)
         else:
@@ -260,3 +276,26 @@ class DeleteStudentDocument(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         id = self.kwargs.get('id')
         return reverse_lazy('show_student', kwargs={'id': id})
+
+# related to print Characteristic of a Student
+
+class GenerateStudentCharacteristicPDF(View):
+    template_name = 'student/pdf/print_student_characteristic.html'
+
+    def get_student_review(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(StudentReview, id=id)
+
+    def get(self, request, *args, **kwargs):
+
+        template = self.template_name
+        context = {
+            'review': self.get_student_review(),
+            'teacher': request.user.teacher,
+            'today': datetime.date.today()
+        }
+        # filename = 'student_review.pdf'
+
+        pdf = render_to_pdf(template, context)
+        return HttpResponse(pdf, content_type='application/pdf')
+
