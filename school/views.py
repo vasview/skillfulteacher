@@ -13,7 +13,10 @@ from school.forms import *
 from student.models import *
 from people.models import Person
 from .models import *
-import xlwt
+from openpyxl import Workbook
+from openpyxl.writer.excel import save_virtual_workbook
+from openpyxl.styles import Font, PatternFill
+
 
 class SchoolHome(View):
     def get(self,request,*args, **kwargs):
@@ -167,35 +170,42 @@ class RemoveStudentFromKlass(LoginRequiredMixin, View):
 
 # export student in a class as a list
 def export_students_xls(request, id):
-
     klass_id = id
-    response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="my_class_students.xls"'
+    klass = Klass.objects.get(pk=klass_id)
+    teacher = ClassroomTeacher.objects.filter(klass_id=klass_id).last().teacher
+    
+    # create workbook
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Ученики"
 
-    workbook  = xlwt.Workbook(encoding='utf-8')
-    worksheet  = workbook.add_sheet('Ученики')
+    # write page header
+    ws.cell(column=3, row=1, value="Список учащихся {} класса".format(klass.code))
+    ws.cell(column=3, row=2, value='учебный год')
+    ws.cell(column=2, row=3, value="Классный руководитель: {}".format(teacher.full_name))
 
-    # Sheet header, first row
-    row_num = 0
+    # insert empty row
+    empty_row=[]
+    for row in range(1,1):
+        ws.append(empty_row)
 
-    font_style = xlwt.XFStyle()
-    font_style.font.bold = True
+    # prepare the main list header
+    row_num = 5
+    columns = ['ФИО', 'Дата рождения', 'Пол', 'Телефон', 'Домашний адрес', ]
 
-    columns = ['ФИО', 'Дата рождения', 'Пол', 'Телефон', ]
-
-    for col_num in range(len(columns)):
-        worksheet.write(row_num, col_num, columns[col_num], font_style)
-
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
-
+    for col in range(1, len(columns)+1):
+        ws.cell(column=col, row=row_num, value=columns[col - 1]).font = Font(bold=True)
+        ws.cell(column=col, row=row_num).fill = PatternFill("solid", start_color="C4C4C4")
+    
+    # write the list of students into the table.
     person_ids = Student.objects.filter(klasses__id=klass_id).values_list('person_id', flat=True)
-
-    rows = Person.objects.filter(pk__in=person_ids).values_list('full_name', 'birth_date', 'gender', 'phone')
-    for row in rows:
+    rows = Person.objects.filter(pk__in=person_ids).values_list('full_name', 'birth_date', 'gender', 'phone', 'actual_address')
+    
+    for row in range(1, len(rows)+1):
         row_num += 1
-        for col_num in range(len(row)):
-            worksheet.write(row_num, col_num, row[col_num], font_style)
+        ws.append(rows[row-1])
 
-    workbook.save(response)
+    response = HttpResponse(content=save_virtual_workbook(wb), content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=my_class_students.xlsx'
     return response
+  
