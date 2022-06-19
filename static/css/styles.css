@@ -276,10 +276,10 @@
       width: auto;
       text-align: center;
       vertical-align: middle;
-      padding: 0;
+      padding: 0 2vw;
       font-size: 19px;
   }
-  
+
   .menu_item a {
       display: block;
       width: 100%;

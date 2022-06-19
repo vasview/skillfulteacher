@@ -20,6 +20,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from people.models import Gender
 from student.models import Student
+from tinymce.models import HTMLField
 
 class JobPosition(models.Model):
     title = models.CharField(max_length=200)
@@ -113,3 +114,19 @@ class JobPositionChange(models.Model):
 class TeacherStudent(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
+
+class LessonPlan(models.Model):
+    title = models.CharField(max_length=255)
+    purpose = HTMLField(blank=True, null=True)
+    lesson_type = models.CharField(max_length=255)
+    lesson_plan = HTMLField(blank=True, null=True)
+    lesson_flow = HTMLField(blank=True, null=True)
+    lesson = models.ForeignKey('school.lesson', on_delete=models.SET_NULL, blank=True, null=True, related_name='teacher_plans')
+    teacher = models.ForeignKey(Teacher, on_delete=models.SET_NULL, blank=True, null=True, related_name='lesson_plans')
+
+    class Meta:
+        verbose_name = 'План урока'
+        verbose_name_plural = 'Планы уроков'
+
+    def __str__(self):
+        return self.title

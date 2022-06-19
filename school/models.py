@@ -5,7 +5,7 @@ from email.policy import default
 from pickle import TRUE
 from statistics import mode
 from tabnanny import verbose
-from tkinter import CASCADE
+from tkinter import CASCADE, N
 from turtle import back
 from typing import ChainMap
 from django.db import models
@@ -167,4 +167,3 @@ class ClassRoomKlass(models.Model):
 
     def __str__(self):
         return self.classroom.number + ' ' + self.klass.code
-

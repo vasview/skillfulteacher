@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ru">
+    {% load static %} 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>План урока {{ lesson_plan.title }}</title>
+    </head>
+    <body style="font-size: 24px;">
+        <div class='wrapper'>
+            <div class='header' style="font-size: 28px;">
+                <p class='title' style="text-align:center;"><strong>План урока</strong></p>
+            </div>
+        <div>
+        <div class='details'>
+            Подготовил учитель: {{ plan.teacher.full_name }} <br/>
+            Название плана урока: {{ plan.title }} <br/>
+            Дата: {{ today }}
+            <hr class='hrItem' />
+        </div>
+		<div class='main'>
+            Цели: </br>
+			{{ plan.purpose | safe }}
+		</div>
+		<div class='details'>
+			Тип урока: {{ plan.lesson_type }}
+		</div>
+        <div class='main'>
+            План урока: </br>
+			{{ plan.lesson_plan | safe }}
+		</div>
+        <div class='main'>
+            Ход урока: </br>
+			{{ plan.lesson_flow | safe }}
+		</div>
+    </div>
+    </body>
+</html>

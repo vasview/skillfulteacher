@@ -4,6 +4,7 @@ from django import forms
 from student.models import Group
 from .models import *
 from django.forms.widgets import DateInput
+from tinymce.widgets import TinyMCE
 
 class UpdateTeacherForm(forms.ModelForm):
     class Meta:
@@ -31,3 +32,15 @@ class TeacherDocumentForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={"class":"w-50 form-control"}),
         }
+
+class LessonPlanForm(forms.ModelForm):
+    class Meta:
+        model = LessonPlan
+        fields = [ 'title','purpose', 'lesson_type', 'lesson_plan', 'lesson_flow']
+        labels = {
+            'title':        'Название', 
+            'purpose':      'Цели', 
+            'lesson_type':  'Тип урока', 
+            'lesson_plan':  'План урока', 
+            'lesson_flow':  'Ход урока',
+        } 

@@ -130,7 +130,7 @@ class StudentPortfolioForm(forms.ModelForm):
     class Meta:
         model = StudentReview
         fields = [ 'title','characteristic',]
-        labels = {'title': 'Название', 'characteristic': 'Xарактеристика'} 
+        labels = {'title': 'Название', 'characteristic': 'Характеристика'} 
 
 class StudentDocumentForm(forms.ModelForm):
     class Meta:

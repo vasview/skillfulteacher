@@ -5,16 +5,19 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSchool"></div>
       <ul class="nav_menu navbar-nav me-auto mb-2 mb-md-0">
-        <li class="menu_item nav-item"><a href="{% url 'all_klasses' %}" class="nav-link">Классы</a></li>
+        <li class="menu_item nav-itemp"><a href="{% url 'all_klasses' %}" class="nav-link">Классы</a></li>
         <li class="menu_item nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Ученики</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownStudents" data-bs-toggle="dropdown" aria-expanded="false">Ученики</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownStudents">
               <li><a class="dropdown-item" href="{% url 'students' %}">Список учеников</a></li>
               <li><a class="dropdown-item" href="{% url 'add_student' %}">Добавить ученика</a></li>
             </ul>
         </li>
-        <li class="menu_item nav-item">
-          <a href="" class="nav-link">Поиск учеников</a>
+        <li class="menu_item nav-ite dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownLessons" data-bs-toggle="dropdown" aria-expanded="false">Уроки</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownLessons">
+              <li><a class="dropdown-item" href="{% url 'list_teacher_lesson_plans' id=request.user.teacher.id  %}">Планы уроков</a></li>
+            </ul>
         </li>
         <li class="menu_item nav-item">
           <a href="" class="nav-link">Табеля</a>

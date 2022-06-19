@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block page_content %}
+<div class="teacher_lesson_plan_block">
+    {% include "partials/back_page_link.html" %}
+    <h3>План урока:</h3>
+    <div class="row mb-1">
+        <div class="col-4"><h4>Название:</h4></div>
+        <div class="col-8" style="font-size: 20px;">{{ lesson_plan.title }}</div>
+    </div>
+    <div class="row mb-3" style="font-size: 20px; padding-left: 10px">
+        <h4>Цели:</h4>
+        <span class="border border-secondary">{{ lesson_plan.purpose | safe }}</span>
+    </div> 
+    <div class="row mb-1">
+        <div class="col-4"><h4>Тип урока:</h4></div>
+        <div class="col-8" style="font-size: 20px;">{{ lesson_plan.lesson_type }}</div>
+    </div>
+    <div class="row mb-3" style="font-size: 20px; padding-left: 10px">
+        <h4>План урока:</h4>
+        <span class="border border-secondary">{{ lesson_plan.lesson_plan | safe }}</span>
+    </div> 
+    <div class="row mb-3" style="font-size: 20px; padding-left: 10px">
+        <h4>Ход урока:</h4>
+        <span class="border border-secondary">{{ lesson_plan.lesson_flow | safe }}</span>
+    </div> 
+    <a href="{% url 'print_lesson_plan' plan_id=lesson_plan.id %}" class="btn btn-sm btn-secondary" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+          </svg>
+        <span class="d-inline p-2">Печать</span>
+    </a>
+    <div class="row mb-1">
+        <a href="{% url 'edit_teacher_lesson_plan' plan_id=lesson_plan.id %}" class="w-50 btn btn-sm btn-success">Редактировать</a>
+    </div>
+</div>
+{% endblock %}
