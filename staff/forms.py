@@ -1,5 +1,7 @@
 import imp
 from django import forms
+
+from student.models import Group
 from .models import *
 from django.forms.widgets import DateInput
 

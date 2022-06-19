@@ -1,0 +1,30 @@
+<div class="add_student_klass_wrapper row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">ФИО ученика</th>
+                <th scope="col">Дата Рождения</th>
+                <th scope="col">Пол</th>
+                <th scope="col">Дейстивие</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for std in group.group_members.all %}
+            <tr>
+                <td>
+                    {{ std.student.person.full_name }}
+                </td>
+                <td>
+                    {{ std.student.person.birth_date }}
+                </td>
+                <td>
+                    {{ std.student.person.get_gender_display }}
+                </td>
+                <td>
+                    Удалить
+                </td>
+            </tr>
+        </tbody>
+        {% endfor %}
+    </table>
+</div>  

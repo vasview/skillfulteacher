@@ -1,0 +1,22 @@
+<div class="modal fade" id="editKlassModal_{{group.id}}" tabindex="-1" aria-labelledby="editKlassModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Форма редактирования подгруппы класса</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{% url 'edit_klass_group' id=klass.id group_id=group.id %}" enctype="multipart/form-data" method="post">
+          {% csrf_token %}
+          <input type="hidden" id="klass" name="klass" value="{{ klass.id }}" />
+          <div class="modal-body">
+            <label class="" for='name'>Название группы</label>
+            <input type="text" id="name" name="name" value="{{ group.name }}"/>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>

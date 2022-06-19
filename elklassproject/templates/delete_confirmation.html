@@ -3,7 +3,7 @@
 <div class="confirm_delete_wrapper">
     <form method="POST">
         {% csrf_token %}
-        <h5>Вы точно хотите удалить {{ title }}?</h5>
+        <h5>{{ title }}?</h5>
         <input type='submit' class="btn btn-sm btn-danger" value="Да, удалить">
         <a href="{{request.META.HTTP_REFERER}}" class="btn btn-sm btn-info ml-2">Нет, вернуться назад</a>
     </form>

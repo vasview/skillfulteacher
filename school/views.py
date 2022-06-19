@@ -9,6 +9,7 @@ from django.views.generic import View, ListView, DetailView, CreateView, DeleteV
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from requests import request
 from school.forms import *
 from student.models import *
 from people.models import Person
@@ -82,6 +83,10 @@ class ShowKlass(LoginRequiredMixin, DetailView):
         klass = self.get_klass()
         students = Student.objects.filter(klasses__id=klass.id)
         context['students'] = students
+        groups = Group.objects.filter(klass_id=klass.id)
+        context['klass_groups'] = groups
+        # active_tab = request.REQUEST.get('active_tab','')
+        # context['active_tab'] = active_tab
         return context
 
 class AddStudentsInKlass(LoginRequiredMixin, View):
@@ -142,16 +147,11 @@ class RemoveStudentFromKlass(LoginRequiredMixin, View):
         student_id = self.kwargs.get('std_id')
         return get_object_or_404(Student, id = student_id)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'удалить ученика из класса'
-        return context
-
     def get(self, request, *args, **kwargs):
         klass = self.get_klass()
         student = self.get_student()
         if klass and student:
-            context = {'title': 'удалить ученика из класса'}
+            context = {'title': 'Вы точно хотите удалить ученика из класса'}
             return render(request, self.template_name, context)
         else:
             return redirect('show_klass', id = klass.id)
@@ -163,10 +163,6 @@ class RemoveStudentFromKlass(LoginRequiredMixin, View):
             StudentKlass.objects.get(klass = klass, student = student).delete()
 
         return redirect('show_klass', id = klass.id)
-
-    # def get_success_url(self):
-    #     id = self.kwargs.get('id')
-    #     return reverse_lazy('show_klass', kwargs={'id': id})
 
 # export student in a class as a list
 def export_students_xls(request, id):
@@ -209,3 +205,130 @@ def export_students_xls(request, id):
     response['Content-Disposition'] = 'attachment; filename=my_class_students.xlsx'
     return response
   
+# add group to klass
+class AddKlassGroup(LoginRequiredMixin, View):
+    form_class = AddKlassGroupForm
+    login_url = '/login/'
+
+    def get_klass(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Klass, id=id)
+
+    def post(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+        
+        return redirect('show_klass',  id = klass.id)
+
+class EditKlassGroup(LoginRequiredMixin, View):
+    template_name = 'school/partials/edit_klass_group_modal.html'
+    login_url = '/login/'
+
+    def get_klass(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Klass, id=id)
+
+    def get_group(self):
+        group_id = self.kwargs.get('group_id')
+        return get_object_or_404(Group, id = group_id)
+
+    def get(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        group = self.get_group()
+
+        # ajax
+        if request.headers.get('x-requested-with') == "XMLHttpRequest":
+            print('ajax request')
+
+        if klass and group:
+            context = {
+                'klass': klass,
+                'group': group
+            }
+            return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        group = self.get_group()
+        if klass and group:
+            group.name = request.POST.get('name')
+            group.save()
+    
+        return redirect('show_klass', id = klass.id)
+    
+class RemoveKlassGroup(LoginRequiredMixin, View):
+    template_name = 'delete_confirmation.html'
+    login_url = '/login/'
+
+    def get_klass(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Klass, id=id)
+
+    def get_group(self):
+        group_id = self.kwargs.get('group_id')
+        return get_object_or_404(Group, id = group_id)
+
+    def get(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        group = self.get_group()
+        if klass and group:
+            context = {'title': 'Вы точно хотите удалить группу из класса'}
+            return render(request, self.template_name, context)
+        else:
+            return redirect('show_klass', id = klass.id)
+
+    def post(self, request, *args, **kwargs):
+        klass = self.get_klass()
+        group = self.get_group()
+        if klass and group:
+            group.delete()
+
+        return redirect('show_klass', id = klass.id)
+
+# adding studing to a group
+class AddStudentsToGroup(LoginRequiredMixin, View):
+    form_class = StudentGroupMemberForm
+    template_name = 'school/add_group_members.html'
+    login_url = '/login/'
+
+    def get_group(self):
+        id = self.kwargs.get('id')
+        return get_object_or_404(Group, id=id)
+
+    def get_student(self, student_id):
+        return get_object_or_404(Student, id = student_id)
+
+    def get_context_data(self, **kwargs):
+        group = self.get_group()
+        context = {'group': group}
+        students_in_klass = StudentKlass.objects.filter(klass=group.klass).values_list('student_id', flat=True)
+        context['students'] = Student.objects.filter(id__in=students_in_klass)
+        return context
+
+    def get(self, request, *args, **kwargs):
+        # klass = self.get_klass()
+        form = self.form_class()
+        context = self.get_context_data()
+        context['form'] = form
+        # if context['students']:
+        return render(request, self.template_name, context)
+        # else:
+            # return redirect('show_klass', id = klass.id)
+
+    def post(self, request, *args, **kwargs):
+        group = self.get_group()
+        students = request.POST.getlist('students')
+
+        if students:
+            for std in students: 
+                student = self.get_student(std)
+                form = StudentGroupMemberForm(request.POST, initial={'group': group, 'student': student})
+                if form.is_valid():
+                    form.save()
+            return redirect('show_klass', id = group.klass_id)
+        else:
+            form = self.form_class(request.POST)
+            return render(request, self.template_name, {'form': form, 'group': group})
+

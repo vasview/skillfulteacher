@@ -113,8 +113,8 @@ class Group(models.Model):
         return self.name
 
 class GroupMember(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="student_groups")
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="group_members")
 
     class Meta:
         verbose_name = 'Состав группы учеников'
