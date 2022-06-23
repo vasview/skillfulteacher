@@ -16,11 +16,7 @@
         <li class="menu_item nav-ite dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownLessons" data-bs-toggle="dropdown" aria-expanded="false">Уроки</a>
             <ul class="dropdown-menu" aria-labelledby="dropdownLessons">
-              {% if request.user.is_authenticated %}
-              <li><a class="dropdown-item" href="{% url 'list_teacher_lesson_plans' id=request.user.teacher.id  %}">Планы уроков</a></li>
-              {% else %}
-              <li><a class="dropdown-item" href="$">Планы уроков</a></li>
-              {% endif %}
+              <li><a class="dropdown-item" href="{% url 'all_teacher_lesson_plans' %}">Планы уроков</a></li>
             </ul>
         </li>
         <li class="menu_item nav-item">

@@ -121,19 +121,26 @@ class DeleteTeacherDocument(LoginRequiredMixin, DeleteView):
         return reverse_lazy('list_teacher_document', kwargs={'id': id})
 
 # Teacher's lesson plans
-class ListTeacherLessonPlans(LoginRequiredMixin, View):
-    template_name = 'staff/teacher_lesson_plans.html'
+class ListTeachersLessonPlans(LoginRequiredMixin, ListView):
+    model = LessonPlan
+    context_object_name = 'lesson_plans'
+    template_name = 'staff/index_teacher_lesson_plans.html'
     login_url = '/login/'
 
     def get_teacher(self):
-        id = self.kwargs.get('id')
+        id = self.request.user.teacher.id
         teacher = Teacher.objects.get(pk=id)
         return get_object_or_404(Teacher, id=id)
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self,**kwargs):
+        context = super(ListTeachersLessonPlans,self).get_context_data(**kwargs)
+        context['teacher'] = self.get_teacher()
+        return context
+
+    def get_queryset(self):
         teacher = self.get_teacher()
-        context = {'teacher': teacher}
-        return render(request, self.template_name, context)
+        queryset = LessonPlan.objects.filter(teacher=teacher)
+        return queryset
 
 class AddTeacherLessonPlan(LoginRequiredMixin, View):
     form_class = LessonPlanForm
@@ -159,18 +166,18 @@ class AddTeacherLessonPlan(LoginRequiredMixin, View):
         if form.is_valid():
             form.instance.teacher = teacher
             form.save()
-            return redirect('list_teacher_lesson_plans', id = teacher.id)
+            return redirect('all_teacher_lesson_plans')
         else:
             return render(request, self.template_name, {'form': form, 'teacher': teacher})
 
 
-class ShowTeacherLessonPlan(LoginRequiredMixin, DeleteView):
+class ShowTeacherLessonPlan(LoginRequiredMixin, DetailView):
     model = LessonPlan
     context_object_name = 'lesson_plan'
     pk_url_kwarg = 'plan_id'
     template_name = 'staff/show_teacher_lesson_plan.html'
     login_url = '/login/'
-    pass
+
 
 class EditTeacherLessonPlan(LoginRequiredMixin, UpdateView):
     form_class = LessonPlanForm
@@ -199,8 +206,7 @@ class DeleteTeacherLessonPlan(LoginRequiredMixin, DeleteView):
         return context
 
     def get_success_url(self):
-        id = self.kwargs.get('id')
-        return reverse_lazy('list_teacher_lesson_plans', kwargs={'id': id})
+        return reverse_lazy('all_teacher_lesson_plans')
 
 # related to print Lesson Plan in PDF
 class GenerateLessonPlanPDF(View):
